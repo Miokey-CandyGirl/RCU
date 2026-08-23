@@ -1,0 +1,583 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>校园指南 - 华田中央大学</title>
+  <meta name="description" content="华田中央大学校园指南 - 校园地图、交通指南、生活服务、住宿指南、校园一卡通" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <style>
+    .campus-map-placeholder {
+      width: 100%;
+      height: 400px;
+      background: var(--gradient-hero);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      margin: var(--space-6) 0;
+    }
+    .campus-map-placeholder::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .campus-map-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: var(--color-white);
+    }
+    .campus-map-icon {
+      font-size: 64px;
+      margin-bottom: var(--space-4);
+      color: var(--color-gold-400);
+    }
+    .campus-map-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-semibold);
+      font-family: var(--font-family-serif);
+      margin-bottom: var(--space-2);
+    }
+    .campus-map-desc {
+      font-size: var(--font-size-sm);
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .transport-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin: var(--space-6) 0;
+    }
+    .transport-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-fast);
+    }
+    .transport-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary-200);
+    }
+    .transport-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-lg);
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--color-gold-400);
+      margin-bottom: var(--space-4);
+    }
+    .transport-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-3);
+      font-family: var(--font-family-serif);
+    }
+    .transport-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+    }
+    .transport-desc p {
+      margin-bottom: var(--space-2);
+    }
+    .transport-desc p:last-child {
+      margin-bottom: 0;
+    }
+    .life-service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin: var(--space-6) 0;
+    }
+    .life-service-item {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      text-align: center;
+      border: 1px solid var(--color-border-light);
+      transition: all var(--transition-fast);
+    }
+    .life-service-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary-100);
+    }
+    .life-service-icon {
+      font-size: 36px;
+      margin-bottom: var(--space-3);
+    }
+    .life-service-name {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-2);
+    }
+    .life-service-desc {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+    .dormitory-section {
+      background: var(--color-gray-50);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      margin: var(--space-6) 0;
+      border: 1px solid var(--color-border-light);
+    }
+    .dormitory-features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    .dormitory-feature {
+      text-align: center;
+      padding: var(--space-4);
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+    }
+    .dormitory-feature-icon {
+      font-size: 28px;
+      margin-bottom: var(--space-2);
+    }
+    .dormitory-feature-text {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+    .card-features {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-4);
+      margin: var(--space-6) 0;
+    }
+    .card-feature {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5) var(--space-3);
+      text-align: center;
+      border: 1px solid var(--color-border-light);
+      transition: all var(--transition-fast);
+    }
+    .card-feature:hover {
+      border-color: var(--color-gold-300);
+      box-shadow: var(--shadow-md);
+    }
+    .card-feature-icon {
+      font-size: 32px;
+      margin-bottom: var(--space-3);
+    }
+    .card-feature-name {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-primary-800);
+    }
+    @media (max-width: 1024px) {
+      .transport-cards { grid-template-columns: 1fr; }
+      .life-service-grid { grid-template-columns: repeat(2, 1fr); }
+      .dormitory-features { grid-template-columns: repeat(2, 1fr); }
+      .card-features { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .campus-map-placeholder { height: 250px; }
+      .life-service-grid { grid-template-columns: repeat(2, 1fr); }
+      .dormitory-features { grid-template-columns: repeat(2, 1fr); }
+      .card-features { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部信息栏 -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-links">
+        <a href="#">信息门户</a>
+        <a href="#">教务系统</a>
+        <a href="#">图书馆</a>
+        <a href="#">邮箱登录</a>
+      </div>
+      <div class="top-bar-actions">
+        <button class="lang-switch">English</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主导航栏 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="site-brand">
+        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" /></a>
+
+      <nav class="main-nav">
+        <div class="nav-item">
+          <a href="../index.html">首页</a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../site-info/overview.html">学校概况</a>
+          <ul class="nav-dropdown">
+            <li><a href="../site-info/overview.html">学校简介</a></li>
+            <li><a href="../site-info/history.html">历史沿革</a></li>
+            <li><a href="../site-info/advantage.html">办学优势</a></li>
+            <li><a href="../site-info/vision.html">愿景使命</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../college/index.html">院系设置</a>
+          <ul class="nav-dropdown">
+            <li><a href="../college/li.html">理学院</a></li>
+            <li><a href="../college/weilai.html">蔚莱科学技术学院</a></li>
+            <li><a href="../college/esports.html">电子竞技学院</a></li>
+            <li><a href="../college/art-media.html">艺术与传媒学院</a></li>
+            <li><a href="../college/literature.html">文学院</a></li>
+            <li><a href="../college/amy.html">艾米商学院</a></li>
+            <li><a href="../college/philosophy-law.html">哲学与社会法学院</a></li>
+            <li><a href="../college/siyuan.html">思源教育学院</a></li>
+            <li><a href="../college/lanyun.html">蓝云外国语学院</a></li>
+            <li><a href="../college/tianyu.html">田语学院</a></li>
+            <li><a href="../college/magic.html">魔法学院</a></li>
+            <li><a href="../college/chuangxiang.html">创想蓝天学院</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../news/school-news.html">新闻动态</a>
+          <ul class="nav-dropdown">
+            <li><a href="../news/school-news.html">校园要闻</a></li>
+            <li><a href="../news/notice.html">通知公告</a></li>
+            <li><a href="../news/academic.html">学术动态</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../recruit/undergraduate.html">招生就业</a>
+          <ul class="nav-dropdown">
+            <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+            <li><a href="../recruit/graduate.html">研究生招生</a></li>
+            <li><a href="../recruit/employment.html">就业服务</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../campus-culture/scenery.html">校园文化</a>
+          <ul class="nav-dropdown">
+            <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            <li><a href="../campus-culture/activities.html">校园活动</a></li>
+            <li><a href="../campus-culture/clubs.html">学生社团</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown active">
+          <a href="library.html">校园服务</a>
+          <ul class="nav-dropdown">
+            <li><a href="library.html">图书馆</a></li>
+            <li><a href="guide.html">校园指南</a></li>
+            <li><a href="academic.html">教务服务</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <button class="search-btn" aria-label="搜索">&#128269;</button>
+        <button class="mobile-menu-btn" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 页面 Banner -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <h1>校园服务</h1>
+      <p>Campus Services</p>
+    </div>
+  </section>
+
+  <!-- 面包屑 -->
+  <div class="breadcrumb-wrapper">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">首页</a>
+        <span class="separator">/</span>
+        <a href="library.html">校园服务</a>
+        <span class="separator">/</span>
+        <span class="current">校园指南</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 页面内容 -->
+  <main class="page-content">
+    <div class="container">
+      <div class="content-sidebar-layout">
+        <!-- 左侧侧边栏 -->
+        <aside class="sidebar-nav">
+          <div class="sidebar-nav-header">
+            <h3>校园服务</h3>
+            <p>Campus Services</p>
+          </div>
+          <ul class="sidebar-nav-menu">
+            <li><a href="library.html">图书馆</a></li>
+            <li><a href="guide.html" class="active">校园指南</a></li>
+            <li><a href="academic.html">教务服务</a></li>
+          </ul>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <article class="content-article">
+          <h1>校园指南</h1>
+          <p>华田中央大学坐落于华田市中央区，交通便利，校园环境优美，生活设施完善。本指南为您提供校园地图、交通出行、生活服务、住宿信息等全方位指引，帮助您快速了解校园、融入校园生活。</p>
+
+          <h2>校园地图</h2>
+          <div style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); margin-bottom: var(--space-6);">
+            <img src="../assets/images/campus-gate.jpg" alt="华田中央大学校门" style="width: 100%; height: auto; display: block;" />
+          </div>
+          <p>校园占地3000余亩，分为教学区、生活区、运动区和科研区四大功能区域。梦云湖贯穿校园南北，将校园分为东西两部分，各区域之间通过桥梁和林荫道连接，交通便捷，步行可达。</p>
+
+          <h2>交通指南</h2>
+          <div class="transport-cards">
+            <div class="transport-card">
+              <div class="transport-icon">&#128652;</div>
+              <div class="transport-title">公共交通</div>
+              <div class="transport-desc">
+                <p><strong>公交线路：</strong>乘坐101路、202路、305路至"华田大学"站下车即达</p>
+                <p><strong>快速公交：</strong>BRT1号线至"中央大学"站</p>
+                <p><strong>校园班车：</strong>工作日每30分钟一班，往返东西校区</p>
+              </div>
+            </div>
+            <div class="transport-card">
+              <div class="transport-icon">&#128647;</div>
+              <div class="transport-title">地铁出行</div>
+              <div class="transport-desc">
+                <p><strong>地铁1号线：</strong>华田大学站B出口，步行5分钟到校</p>
+                <p><strong>地铁4号线：</strong>中央公园站，换乘公交101路</p>
+                <p><strong>首末班车：</strong>06:00 - 23:00</p>
+              </div>
+            </div>
+            <div class="transport-card">
+              <div class="transport-icon">&#128663;</div>
+              <div class="transport-title">自驾出行</div>
+              <div class="transport-desc">
+                <p><strong>导航地址：</strong>华田市中央区大学路1号</p>
+                <p><strong>校门：</strong>东门（主入口）、南门、北门</p>
+                <p><strong>停车位：</strong>访客请停至东门地下停车场</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>生活服务</h2>
+
+          <div style="margin-bottom: var(--space-8); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
+            <img src="../assets/images/campus-cafeteria.jpg" alt="校园食堂" style="width: 100%; height: auto; display: block;" />
+          </div>
+          <p style="text-align: center; color: var(--color-text-tertiary); font-size: var(--font-size-sm); margin-top: calc(var(--space-4) * -1); margin-bottom: var(--space-8);">现代化校园餐厅 · 六大食堂汇聚各地美食</p>
+
+          <div class="life-service-grid">
+            <div class="life-service-item">
+              <div class="life-service-icon">&#127858;</div>
+              <div class="life-service-name">食堂餐饮</div>
+              <div class="life-service-desc">6个学生食堂，各地风味，物美价廉</div>
+            </div>
+            <div class="life-service-item">
+              <div class="life-service-icon">&#128722;</div>
+              <div class="life-service-name">校园超市</div>
+              <div class="life-service-desc">生活日用品、文具零食一应俱全</div>
+            </div>
+            <div class="life-service-item">
+              <div class="life-service-icon">&#127973;</div>
+              <div class="life-service-name">校医院</div>
+              <div class="life-service-desc">24小时急诊，常见病诊疗，医保报销</div>
+            </div>
+            <div class="life-service-item">
+              <div class="life-service-icon">&#127974;</div>
+              <div class="life-service-name">银行网点</div>
+              <div class="life-service-desc">工行、建行、中行ATM及营业厅</div>
+            </div>
+            <div class="life-service-item">
+              <div class="life-service-icon">&#128230;</div>
+              <div class="life-service-name">快递服务</div>
+              <div class="life-service-desc">菜鸟驿站、顺丰、京东等快递点</div>
+            </div>
+            <div class="life-service-item">
+              <div class="life-service-icon">&#128187;</div>
+              <div class="life-service-name">网络服务</div>
+              <div class="life-service-desc">校园WiFi全覆盖，高速宽带接入</div>
+            </div>
+            <div class="life-service-item">
+              <div class="life-service-icon">&#128203;</div>
+              <div class="life-service-name">打印复印</div>
+              <div class="life-service-desc">各教学楼、宿舍区均有打印店</div>
+            </div>
+            <div class="life-service-item">
+              <div class="life-service-icon">&#128188;</div>
+              <div class="life-service-name">理发店</div>
+              <div class="life-service-desc">校内多家理发店，价格实惠</div>
+            </div>
+          </div>
+
+          <h2>住宿指南</h2>
+          <div class="dormitory-section">
+            <p>学校学生宿舍分为东西两个生活区，共有学生公寓30余栋，可容纳3万余名学生住宿。宿舍环境整洁，设施完善，实行标准化管理，为学生提供舒适温馨的居住环境。</p>
+            <div class="dormitory-features">
+              <div class="dormitory-feature">
+                <div class="dormitory-feature-icon">&#128716;</div>
+                <div class="dormitory-feature-text">4人间/6人间</div>
+              </div>
+              <div class="dormitory-feature">
+                <div class="dormitory-feature-icon">&#10052;</div>
+                <div class="dormitory-feature-text">独立卫浴</div>
+              </div>
+              <div class="dormitory-feature">
+                <div class="dormitory-feature-icon">&#127777;</div>
+                <div class="dormitory-feature-text">空调暖气</div>
+              </div>
+              <div class="dormitory-feature">
+                <div class="dormitory-feature-icon">&#128241;</div>
+                <div class="dormitory-feature-text">WiFi覆盖</div>
+              </div>
+            </div>
+          </div>
+          <ul>
+            <li><strong>本科生宿舍：</strong>4-6人间，上床下桌，配备衣柜、书架、桌椅等设施</li>
+            <li><strong>研究生宿舍：</strong>2-4人间，独立卫浴，配备空调、热水器等</li>
+            <li><strong>留学生公寓：</strong>单人间/双人间，酒店式管理，设施完备</li>
+            <li><strong>宿舍管理：</strong>24小时值班，门禁系统，人脸识别进出</li>
+            <li><strong>生活设施：</strong>每层设有洗衣房、自习室、活动室等公共空间</li>
+          </ul>
+
+          <h2>校园一卡通</h2>
+          <p>校园一卡通是华田中央大学师生在校内的重要身份凭证和支付工具，集身份认证、消费支付、门禁通行等功能于一体，实现"一卡在手，走遍校园"。</p>
+          <div class="card-features">
+            <div class="card-feature">
+              <div class="card-feature-icon">&#127860;</div>
+              <div class="card-feature-name">餐饮消费</div>
+            </div>
+            <div class="card-feature">
+              <div class="card-feature-icon">&#128218;</div>
+              <div class="card-feature-name">图书借阅</div>
+            </div>
+            <div class="card-feature">
+              <div class="card-feature-icon">&#128682;</div>
+              <div class="card-feature-name">门禁通行</div>
+            </div>
+            <div class="card-feature">
+              <div class="card-feature-icon">&#127979;</div>
+              <div class="card-feature-name">医疗挂号</div>
+            </div>
+            <div class="card-feature">
+              <div class="card-feature-icon">&#128184;</div>
+              <div class="card-feature-name">商超购物</div>
+            </div>
+          </div>
+          <ul>
+            <li><strong>充值方式：</strong>支持校园APP在线充值、自助圈存机充值、微信支付宝充值</li>
+            <li><strong>挂失补办：</strong>丢失后可通过校园APP或一卡通服务中心挂失补办</li>
+            <li><strong>服务中心：</strong>位于学生活动中心一楼，工作日 08:00-17:30</li>
+            <li><strong>电子校园卡：</strong>支持手机NFC虚拟卡，刷手机即可通行消费</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" />
+          <div>
+            <h3>华田中央大学</h3>
+            <div class="footer-brand-en">Rincatia Central University</div>
+          </div>
+          <p>立德树人 · 追求卓越 · 传承文明 · 开创未来<br/>
+             追梦深蓝，启航未来</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-link-group">
+            <h4>学校概况</h4>
+            <ul>
+              <li><a href="../site-info/overview.html">学校简介</a></li>
+              <li><a href="../site-info/history.html">历史沿革</a></li>
+              <li><a href="../site-info/advantage.html">办学优势</a></li>
+              <li><a href="../site-info/vision.html">愿景使命</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>院系设置</h4>
+            <ul>
+              <li><a href="../college/li.html">理学院</a></li>
+              <li><a href="../college/weilai.html">蔚莱科技学院</a></li>
+              <li><a href="../college/tianyu.html">田语学院</a></li>
+              <li><a href="../college/magic.html">魔法学院</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>招生就业</h4>
+            <ul>
+              <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+              <li><a href="../recruit/graduate.html">研究生招生</a></li>
+              <li><a href="../recruit/employment.html">就业服务</a></li>
+              <li><a href="../recruit/employment.html">校友之家</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>校园服务</h4>
+            <ul>
+              <li><a href="library.html">图书馆</a></li>
+              <li><a href="guide.html">校园指南</a></li>
+              <li><a href="academic.html">教务服务</a></li>
+              <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-contact">
+          <h4>联系我们</h4>
+          <div class="footer-contact-item">
+            <span class="icon">&#128205;</span>
+            <span>华田市中央区大学路1号<br/>华田中央大学</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9742;</span>
+            <span>招生咨询：0123-4567890<br/>
+                  校办电话：0123-4567888</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9993;</span>
+            <span>info@rincatia-uni.edu.cn</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-links">
+          <a href="#">隐私政策</a>
+          <a href="#">使用条款</a>
+          <a href="#">网站地图</a>
+          <a href="#">旧版网站</a>
+        </div>
+        <p>&copy; 2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
+           京ICP备XXXXXXXX号 · 京公网安备XXXXXXXXXXXX号</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,629 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>本科招生 - 华田中央大学</title>
+  <meta name="description" content="华田中央大学本科招生 - 招生计划、招生简章、历年分数线、专业介绍" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <style>
+    /* 招生信息卡片网格 */
+    .info-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+      margin: var(--space-10) 0;
+    }
+
+    .info-card {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-5);
+      padding: var(--space-8);
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+      cursor: pointer;
+    }
+
+    .info-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: var(--color-primary-200);
+    }
+
+    .info-card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--color-gold-400);
+      flex-shrink: 0;
+      transition: all var(--transition-normal);
+    }
+
+    .info-card:hover .info-card-icon {
+      transform: scale(1.08);
+    }
+
+    .info-card-content h3 {
+      font-size: var(--font-size-lg);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-2);
+      font-family: var(--font-family-serif);
+    }
+
+    .info-card-content p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* 特色专业列表 */
+    .major-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+      margin: var(--space-6) 0;
+    }
+
+    .major-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-5);
+      background: var(--color-gray-50);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-gold-500);
+      transition: all var(--transition-fast);
+    }
+
+    .major-item:hover {
+      background: var(--color-primary-50);
+      transform: translateX(4px);
+    }
+
+    .major-item-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .major-item h4 {
+      font-size: var(--font-size-base);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-1);
+    }
+
+    .major-item p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* FAQ 问答 */
+    .faq-list {
+      margin: var(--space-6) 0;
+    }
+
+    .faq-item {
+      margin-bottom: var(--space-4);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all var(--transition-fast);
+    }
+
+    .faq-item:hover {
+      border-color: var(--color-primary-200);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .faq-question {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-5) var(--space-6);
+      background: var(--color-white);
+      cursor: pointer;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-primary-800);
+      font-size: var(--font-size-base);
+    }
+
+    .faq-q-tag {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      color: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-serif);
+    }
+
+    .faq-answer {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: 0 var(--space-6) var(--space-5) var(--space-6);
+      padding-left: calc(var(--space-6) + 24px + var(--space-3));
+    }
+
+    .faq-answer p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* 联系信息 */
+    .contact-info-box {
+      background: var(--color-gray-50);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      margin: var(--space-6) 0;
+      border: 1px solid var(--color-border-light);
+    }
+
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+
+    .contact-info-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--color-primary-600);
+      flex-shrink: 0;
+    }
+
+    .contact-info-item h4 {
+      font-size: var(--font-size-base);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-1);
+    }
+
+    .contact-info-item p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .info-card-grid { grid-template-columns: 1fr; }
+      .major-list { grid-template-columns: 1fr; }
+      .contact-info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部信息栏 -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-links">
+        <a href="#">信息门户</a>
+        <a href="#">教务系统</a>
+        <a href="#">图书馆</a>
+        <a href="#">邮箱登录</a>
+      </div>
+      <div class="top-bar-actions">
+        <button class="lang-switch">English</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主导航栏 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="site-brand">
+        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" /></a>
+
+      <nav class="main-nav">
+        <div class="nav-item">
+          <a href="../index.html">首页</a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../site-info/overview.html">学校概况</a>
+          <ul class="nav-dropdown">
+            <li><a href="../site-info/overview.html">学校简介</a></li>
+            <li><a href="../site-info/history.html">历史沿革</a></li>
+            <li><a href="../site-info/advantage.html">办学优势</a></li>
+            <li><a href="../site-info/vision.html">愿景使命</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../college/index.html">院系设置</a>
+          <ul class="nav-dropdown">
+            <li><a href="../college/li.html">理学院</a></li>
+            <li><a href="../college/weilai.html">蔚莱科学技术学院</a></li>
+            <li><a href="../college/esports.html">电子竞技学院</a></li>
+            <li><a href="../college/art-media.html">艺术与传媒学院</a></li>
+            <li><a href="../college/literature.html">文学院</a></li>
+            <li><a href="../college/amy.html">艾米商学院</a></li>
+            <li><a href="../college/philosophy-law.html">哲学与社会法学院</a></li>
+            <li><a href="../college/siyuan.html">思源教育学院</a></li>
+            <li><a href="../college/lanyun.html">蓝云外国语学院</a></li>
+            <li><a href="../college/tianyu.html">田语学院</a></li>
+            <li><a href="../college/magic.html">魔法学院</a></li>
+            <li><a href="../college/chuangxiang.html">创想蓝天学院</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../news/school-news.html">新闻动态</a>
+          <ul class="nav-dropdown">
+            <li><a href="../news/school-news.html">校园要闻</a></li>
+            <li><a href="../news/notice.html">通知公告</a></li>
+            <li><a href="../news/academic.html">学术动态</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown active">
+          <a href="undergraduate.html">招生就业</a>
+          <ul class="nav-dropdown">
+            <li><a href="undergraduate.html">本科招生</a></li>
+            <li><a href="graduate.html">研究生招生</a></li>
+            <li><a href="employment.html">就业服务</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../campus-culture/scenery.html">校园文化</a>
+          <ul class="nav-dropdown">
+            <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            <li><a href="../campus-culture/activities.html">校园活动</a></li>
+            <li><a href="../campus-culture/clubs.html">学生社团</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../service/library.html">校园服务</a>
+          <ul class="nav-dropdown">
+            <li><a href="../service/library.html">图书馆</a></li>
+            <li><a href="../service/guide.html">校园指南</a></li>
+            <li><a href="../service/academic.html">教务服务</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <button class="search-btn" aria-label="搜索">&#128269;</button>
+        <button class="mobile-menu-btn" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 页面 Banner -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <h1>招生就业</h1>
+      <p>Admission &amp; Career</p>
+    </div>
+  </section>
+
+  <!-- 面包屑 -->
+  <div class="breadcrumb-wrapper">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">首页</a>
+        <span class="separator">/</span>
+        <a href="undergraduate.html">招生就业</a>
+        <span class="separator">/</span>
+        <span class="current">本科招生</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 页面内容 -->
+  <main class="page-content">
+    <div class="container">
+      <div class="content-sidebar-layout">
+        <!-- 左侧侧边栏 -->
+        <aside class="sidebar-nav">
+          <div class="sidebar-nav-header">
+            <h3>招生就业</h3>
+            <p>Admission &amp; Career</p>
+          </div>
+          <ul class="sidebar-nav-menu">
+            <li><a href="undergraduate.html" class="active">本科招生</a></li>
+            <li><a href="graduate.html">研究生招生</a></li>
+            <li><a href="employment.html">就业服务</a></li>
+          </ul>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <article class="content-article">
+          <h1>本科招生</h1>
+          <p>华田中央大学面向全国31个省、自治区、直辖市招生，现有本科专业68个，其中国家级特色专业5个，国家级一流本科专业建设点12个。2026年计划招收本科生6000人。学校始终坚持立德树人根本任务，以培养担当民族复兴大任的时代新人为己任，致力于培养具有创新精神、实践能力和国际视野的高素质人才。</p>
+
+          <div style="margin: var(--space-8) 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
+            <img src="../assets/images/campus-registration.jpg" alt="新生报到现场" style="width: 100%; height: auto; display: block;" />
+          </div>
+          <p style="text-align: center; color: var(--color-text-tertiary); font-size: var(--font-size-sm); margin-top: calc(var(--space-4) * -1); margin-bottom: var(--space-8);">2026级新生报到现场 · 6000名新学子相聚华田</p>
+
+          <p>学校秉承"追梦深蓝，启航未来"的办学理念，不断深化教育教学改革，创新人才培养模式，为学生提供优质的教育资源和广阔的发展平台。欢迎广大学子报考华田中央大学，在这里开启人生新篇章。</p>
+
+          <!-- 招生信息卡片网格 -->
+          <div class="info-card-grid">
+            <div class="info-card">
+              <div class="info-card-icon">&#128196;</div>
+              <div class="info-card-content">
+                <h3>招生计划</h3>
+                <p>2026年本科招生计划及专业分布，各省招生名额详细查询</p>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">&#128214;</div>
+              <div class="info-card-content">
+                <h3>招生简章</h3>
+                <p>2026年本科招生章程及报考指南，录取规则详细说明</p>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">&#128202;</div>
+              <div class="info-card-content">
+                <h3>历年分数</h3>
+                <p>近三年各省录取分数线查询，各专业录取分数统计</p>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">&#127891;</div>
+              <div class="info-card-content">
+                <h3>专业介绍</h3>
+                <p>各学院本科专业详细介绍，培养方案与就业方向解读</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>特色专业介绍</h2>
+          <p>学校拥有5个国家级特色专业，涵盖文、理、工、教育等多个学科领域。这些专业办学历史悠久、师资力量雄厚、教学质量优异，是学校人才培养的亮点和品牌。</p>
+
+          <div class="major-list">
+            <div class="major-item">
+              <div class="major-item-icon">&#11088;</div>
+              <div>
+                <h4>田语（师范）</h4>
+                <p>全国唯一国家级特色专业，培养田语言文化教育专门人才，毕业生供不应求</p>
+              </div>
+            </div>
+            <div class="major-item">
+              <div class="major-item-icon">&#128218;</div>
+              <div>
+                <h4>汉语言文学</h4>
+                <p>历史悠久，底蕴深厚，国家级一流本科专业建设点，名师荟萃</p>
+              </div>
+            </div>
+            <div class="major-item">
+              <div class="major-item-icon">&#128290;</div>
+              <div>
+                <h4>数学与应用数学</h4>
+                <p>国家级一流专业，科研实力雄厚，深造率位居全校前列</p>
+              </div>
+            </div>
+            <div class="major-item">
+              <div class="major-item-icon">&#128187;</div>
+              <div>
+                <h4>计算机科学与技术</h4>
+                <p>热门工科专业，就业前景好，与知名企业深度合作培养</p>
+              </div>
+            </div>
+            <div class="major-item">
+              <div class="major-item-icon">&#127891;</div>
+              <div>
+                <h4>教育学</h4>
+                <p>师范传统专业，名师荟萃，培养优秀教育工作者的摇篮</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>招生问答</h2>
+          <p>以下是考生和家长经常咨询的问题，希望能帮助您更好地了解华田中央大学的招生政策和校园生活。</p>
+
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question">
+                <span class="faq-q-tag">Q</span>
+                <span>学校的录取原则是什么？</span>
+              </div>
+              <div class="faq-answer">
+                <p>学校按照"分数优先、遵循志愿"的原则进行录取，不设专业级差。对于进档考生，根据投档成绩从高到低排序，依次按照考生填报的专业志愿顺序录取。同等条件下，参考相关科目成绩及综合素质评价。</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <span class="faq-q-tag">Q</span>
+                <span>是否有专业级差？</span>
+              </div>
+              <div class="faq-answer">
+                <p>我校不设专业级差。考生可以按照自己的兴趣和志向自由填报专业志愿，不用担心因级差导致的分数损耗。建议考生根据自身情况，合理安排专业志愿顺序，形成梯度。</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <span class="faq-q-tag">Q</span>
+                <span>转专业政策如何？</span>
+              </div>
+              <div class="faq-answer">
+                <p>学校实行宽松的转专业政策。学生在大一学年结束后，可以申请转专业。各学院根据接收计划组织考核，考核通过即可转入目标专业学习。近年来转专业成功率约为85%，充分尊重学生的专业选择权。</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <span class="faq-q-tag">Q</span>
+                <span>奖学金制度如何？</span>
+              </div>
+              <div class="faq-answer">
+                <p>学校建立了完善的奖助学金体系，设有国家奖学金、国家励志奖学金、校长奖学金、优秀学生奖学金等多种奖学金，获奖面超过40%。同时设有各类助学金和勤工助学岗位，确保家庭经济困难学生顺利完成学业。</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <span class="faq-q-tag">Q</span>
+                <span>住宿条件怎么样？</span>
+              </div>
+              <div class="faq-answer">
+                <p>学生宿舍实行公寓化管理，4-6人间，配备空调、热水器、独立卫浴、书桌、衣柜等设施。宿舍楼内设有自习室、活动室、洗衣房等公共空间。校园实现无线网络全覆盖，为学生提供舒适便捷的生活环境。</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>联系我们</h2>
+          <p>如有招生相关疑问，欢迎通过以下方式联系我们。招生办公室工作人员将竭诚为您服务。</p>
+
+          <div class="contact-info-box">
+            <div class="contact-info-grid">
+              <div class="contact-info-item">
+                <div class="contact-info-icon">&#9742;</div>
+                <div>
+                  <h4>咨询电话</h4>
+                  <p>0123-4567890<br />0123-4567891</p>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon">&#9993;</div>
+                <div>
+                  <h4>电子邮箱</h4>
+                  <p>zsb@rincatia-uni.edu.cn</p>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon">&#128205;</div>
+                <div>
+                  <h4>办公地址</h4>
+                  <p>华田市中央区大学路1号<br />华田中央大学招生办公室</p>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon">&#128336;</div>
+                <div>
+                  <h4>办公时间</h4>
+                  <p>周一至周五<br />8:30 - 11:30，14:00 - 17:00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" />
+          <div>
+            <h3>华田中央大学</h3>
+            <div class="footer-brand-en">Rincatia Central University</div>
+          </div>
+          <p>立德树人 · 追求卓越 · 传承文明 · 开创未来<br/>
+             追梦深蓝，启航未来</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-link-group">
+            <h4>学校概况</h4>
+            <ul>
+              <li><a href="../site-info/overview.html">学校简介</a></li>
+              <li><a href="../site-info/history.html">历史沿革</a></li>
+              <li><a href="../site-info/advantage.html">办学优势</a></li>
+              <li><a href="../site-info/vision.html">愿景使命</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>院系设置</h4>
+            <ul>
+              <li><a href="../college/li.html">理学院</a></li>
+              <li><a href="../college/weilai.html">蔚莱科技学院</a></li>
+              <li><a href="../college/tianyu.html">田语学院</a></li>
+              <li><a href="../college/magic.html">魔法学院</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>招生就业</h4>
+            <ul>
+              <li><a href="undergraduate.html">本科招生</a></li>
+              <li><a href="graduate.html">研究生招生</a></li>
+              <li><a href="employment.html">就业服务</a></li>
+              <li><a href="employment.html">校友之家</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>校园服务</h4>
+            <ul>
+              <li><a href="../service/library.html">图书馆</a></li>
+              <li><a href="../service/guide.html">校园指南</a></li>
+              <li><a href="../service/academic.html">教务服务</a></li>
+              <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-contact">
+          <h4>联系我们</h4>
+          <div class="footer-contact-item">
+            <span class="icon">&#128205;</span>
+            <span>华田市中央区大学路1号<br/>华田中央大学</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9742;</span>
+            <span>招生咨询：0123-4567890<br/>
+                  校办电话：0123-4567888</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9993;</span>
+            <span>info@rincatia-uni.edu.cn</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-links">
+          <a href="#">隐私政策</a>
+          <a href="#">使用条款</a>
+          <a href="#">网站地图</a>
+          <a href="#">旧版网站</a>
+        </div>
+        <p>&copy; 2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
+           京ICP备XXXXXXXX号 · 京公网安备XXXXXXXXXXXX号</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

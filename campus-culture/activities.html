@@ -1,0 +1,554 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>校园活动 - 华田中央大学</title>
+  <meta name="description" content="华田中央大学校园活动 - 丰富多彩的文化、艺术、体育、学术活动" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <style>
+    .activity-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .activity-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+    }
+    .activity-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--color-primary-100);
+    }
+    .activity-card-header {
+      height: 120px;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .activity-card-header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .activity-card-header::after {
+      content: "";
+      position: absolute;
+      bottom: -30%;
+      left: -20%;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(201, 169, 97, 0.1);
+    }
+    .activity-card-icon {
+      font-size: 42px;
+      color: var(--color-gold-400);
+      position: relative;
+      z-index: 1;
+    }
+    .activity-card-body {
+      padding: var(--space-5);
+    }
+    .activity-card-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-2);
+      font-family: var(--font-family-serif);
+    }
+    .activity-card-time {
+      font-size: var(--font-size-xs);
+      color: var(--color-gold-600);
+      margin-bottom: var(--space-3);
+      font-weight: var(--font-weight-medium);
+    }
+    .activity-card-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+    .event-list {
+      margin-top: var(--space-6);
+    }
+    .event-item {
+      display: flex;
+      gap: var(--space-5);
+      padding: var(--space-5);
+      border-bottom: 1px solid var(--color-border-light);
+      transition: all var(--transition-fast);
+    }
+    .event-item:last-child {
+      border-bottom: none;
+    }
+    .event-item:hover {
+      background: var(--color-gray-50);
+    }
+    .event-date {
+      flex-shrink: 0;
+      width: 70px;
+      text-align: center;
+      background: var(--color-primary-50);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-2);
+    }
+    .event-date .day {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-700);
+      line-height: 1;
+      font-family: var(--font-family-serif);
+    }
+    .event-date .month {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+      margin-top: var(--space-1);
+    }
+    .event-info {
+      flex: 1;
+    }
+    .event-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+    .event-meta {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-tertiary);
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .event-meta span {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+    @media (max-width: 1024px) {
+      .activity-card-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .activity-card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部信息栏 -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-links">
+        <a href="#">信息门户</a>
+        <a href="#">教务系统</a>
+        <a href="#">图书馆</a>
+        <a href="#">邮箱登录</a>
+      </div>
+      <div class="top-bar-actions">
+        <button class="lang-switch">English</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主导航栏 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="site-brand">
+        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" /></a>
+
+      <nav class="main-nav">
+        <div class="nav-item">
+          <a href="../index.html">首页</a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../site-info/overview.html">学校概况</a>
+          <ul class="nav-dropdown">
+            <li><a href="../site-info/overview.html">学校简介</a></li>
+            <li><a href="../site-info/history.html">历史沿革</a></li>
+            <li><a href="../site-info/advantage.html">办学优势</a></li>
+            <li><a href="../site-info/vision.html">愿景使命</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../college/index.html">院系设置</a>
+          <ul class="nav-dropdown">
+            <li><a href="../college/li.html">理学院</a></li>
+            <li><a href="../college/weilai.html">蔚莱科学技术学院</a></li>
+            <li><a href="../college/esports.html">电子竞技学院</a></li>
+            <li><a href="../college/art-media.html">艺术与传媒学院</a></li>
+            <li><a href="../college/literature.html">文学院</a></li>
+            <li><a href="../college/amy.html">艾米商学院</a></li>
+            <li><a href="../college/philosophy-law.html">哲学与社会法学院</a></li>
+            <li><a href="../college/siyuan.html">思源教育学院</a></li>
+            <li><a href="../college/lanyun.html">蓝云外国语学院</a></li>
+            <li><a href="../college/tianyu.html">田语学院</a></li>
+            <li><a href="../college/magic.html">魔法学院</a></li>
+            <li><a href="../college/chuangxiang.html">创想蓝天学院</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../news/school-news.html">新闻动态</a>
+          <ul class="nav-dropdown">
+            <li><a href="../news/school-news.html">校园要闻</a></li>
+            <li><a href="../news/notice.html">通知公告</a></li>
+            <li><a href="../news/academic.html">学术动态</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../recruit/undergraduate.html">招生就业</a>
+          <ul class="nav-dropdown">
+            <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+            <li><a href="../recruit/graduate.html">研究生招生</a></li>
+            <li><a href="../recruit/employment.html">就业服务</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown active">
+          <a href="scenery.html">校园文化</a>
+          <ul class="nav-dropdown">
+            <li><a href="scenery.html">校园风光</a></li>
+            <li><a href="activities.html">校园活动</a></li>
+            <li><a href="clubs.html">学生社团</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../service/library.html">校园服务</a>
+          <ul class="nav-dropdown">
+            <li><a href="../service/library.html">图书馆</a></li>
+            <li><a href="../service/guide.html">校园指南</a></li>
+            <li><a href="../service/academic.html">教务服务</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <button class="search-btn" aria-label="搜索">&#128269;</button>
+        <button class="mobile-menu-btn" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 页面 Banner -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <h1>校园文化</h1>
+      <p>Campus Culture</p>
+    </div>
+  </section>
+
+  <!-- 面包屑 -->
+  <div class="breadcrumb-wrapper">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">首页</a>
+        <span class="separator">/</span>
+        <a href="scenery.html">校园文化</a>
+        <span class="separator">/</span>
+        <span class="current">校园活动</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 页面内容 -->
+  <main class="page-content">
+    <div class="container">
+      <div class="content-sidebar-layout">
+        <!-- 左侧侧边栏 -->
+        <aside class="sidebar-nav">
+          <div class="sidebar-nav-header">
+            <h3>校园文化</h3>
+            <p>Campus Culture</p>
+          </div>
+          <ul class="sidebar-nav-menu">
+            <li><a href="scenery.html">校园风光</a></li>
+            <li><a href="activities.html" class="active">校园活动</a></li>
+            <li><a href="clubs.html">学生社团</a></li>
+          </ul>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <article class="content-article">
+          <h1>校园活动</h1>
+          <p>学校校园文化活动丰富多彩，每年举办各类文化、艺术、体育、学术活动数百场，营造了浓厚的校园文化氛围。学校坚持以文化人、以文育人，通过形式多样的校园活动，丰富学生课余生活，提升学生综合素质，助力学生全面发展。</p>
+
+          <div style="margin: var(--space-8) 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
+            <img src="../assets/images/campus-interview.jpg" alt="校园采访活动" style="width: 100%; height: auto; display: block;" />
+          </div>
+          <p style="text-align: center; color: var(--color-text-tertiary); font-size: var(--font-size-sm); margin-top: calc(var(--space-4) * -1); margin-bottom: var(--space-8);">校园媒体中心采访活动 · 讲述华田学子的青春故事</p>
+
+          <h2>品牌活动</h2>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); margin-bottom: var(--space-10);">
+            <div style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
+              <img src="../assets/images/campus-sports-day.jpg" alt="校运动会开幕式" style="width: 100%; height: 200px; object-fit: cover; display: block;" />
+              <div style="padding: var(--space-4) var(--space-5);">
+                <div style="font-weight: 600; font-size: var(--font-size-base); color: var(--color-text-primary); margin-bottom: 4px;">校运动会开幕式</div>
+                <div style="font-size: var(--font-size-sm); color: var(--color-text-tertiary);">每年春季 · 万余名师生参与</div>
+              </div>
+            </div>
+            <div style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
+              <img src="../assets/images/campus-art-festival.jpg" alt="校园文化艺术节" style="width: 100%; height: 200px; object-fit: cover; display: block;" />
+              <div style="padding: var(--space-4) var(--space-5);">
+                <div style="font-weight: 600; font-size: var(--font-size-base); color: var(--color-text-primary); margin-bottom: 4px;">校园文化艺术节</div>
+                <div style="font-size: var(--font-size-sm); color: var(--color-text-tertiary);">每年4-5月 · 璀璨之夜文艺汇演</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="activity-card-grid">
+            <div class="activity-card">
+              <div class="activity-card-header">
+                <span class="activity-card-icon">&#127912;</span>
+              </div>
+              <div class="activity-card-body">
+                <div class="activity-card-title">校园文化艺术节</div>
+                <div class="activity-card-time">每年 4月 - 5月</div>
+                <div class="activity-card-desc">涵盖音乐、舞蹈、戏剧、美术等多种艺术形式，是校园规模最大的艺术盛会。</div>
+              </div>
+            </div>
+            <div class="activity-card">
+              <div class="activity-card-header">
+                <span class="activity-card-icon">&#128640;</span>
+              </div>
+              <div class="activity-card-body">
+                <div class="activity-card-title">学术科技节</div>
+                <div class="activity-card-time">每年 10月 - 11月</div>
+                <div class="activity-card-desc">学术讲座、学科竞赛、创新创业展示，激发学生科研热情与创新思维。</div>
+              </div>
+            </div>
+            <div class="activity-card">
+              <div class="activity-card-header">
+                <span class="activity-card-icon">&#127939;</span>
+              </div>
+              <div class="activity-card-body">
+                <div class="activity-card-title">运动会</div>
+                <div class="activity-card-time">每年春季</div>
+                <div class="activity-card-desc">全校性体育盛会，田径、球类、趣味运动项目精彩纷呈，展现青春活力。</div>
+              </div>
+            </div>
+            <div class="activity-card">
+              <div class="activity-card-header">
+                <span class="activity-card-icon">&#127881;</span>
+              </div>
+              <div class="activity-card-body">
+                <div class="activity-card-title">迎新晚会</div>
+                <div class="activity-card-time">每年 9月</div>
+                <div class="activity-card-desc">欢迎新同学的盛大晚会，精彩纷呈的节目开启大学美好时光。</div>
+              </div>
+            </div>
+            <div class="activity-card">
+              <div class="activity-card-header">
+                <span class="activity-card-icon">&#127891;</span>
+              </div>
+              <div class="activity-card-body">
+                <div class="activity-card-title">毕业季活动</div>
+                <div class="activity-card-time">每年 6月</div>
+                <div class="activity-card-desc">毕业典礼、毕业晚会、跳蚤市场，留下青春最美好的回忆。</div>
+              </div>
+            </div>
+            <div class="activity-card">
+              <div class="activity-card-header">
+                <span class="activity-card-icon">&#127908;</span>
+              </div>
+              <div class="activity-card-body">
+                <div class="activity-card-title">社团文化节</div>
+                <div class="activity-card-time">每年 3月</div>
+                <div class="activity-card-desc">百团大战，社团展示，发现兴趣，结交同好，绽放青春光彩。</div>
+              </div>
+            </div>
+          </div>
+
+          <h2>志愿服务</h2>
+          <p>学校高度重视志愿服务工作，将其作为实践育人的重要载体。学校青年志愿者协会统筹协调全校志愿服务活动，建立了完善的志愿服务体系。学校年均开展志愿服务活动500余场，参与学生达2万余人次，志愿服务时长累计超过10万小时。</p>
+          <ul>
+            <li><strong>社区服务：</strong>组织学生深入社区开展支教、科普、敬老等志愿服务活动</li>
+            <li><strong>大型赛会：</strong>为国际会议、体育赛事、文化活动提供专业志愿服务</li>
+            <li><strong>环境保护：</strong>开展环保宣传、垃圾分类、植树造林等绿色志愿活动</li>
+            <li><strong>关爱帮扶：</strong>关爱留守儿童、帮扶残障人士、慰问孤寡老人</li>
+            <li><strong>应急救援：</strong>组建应急志愿服务队，参与各类应急救援工作</li>
+          </ul>
+
+          <h2>最近活动预告</h2>
+          <div class="event-list">
+            <div class="event-item">
+              <div class="event-date">
+                <div class="day">15</div>
+                <div class="month">9月</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">2026级新生迎新晚会</div>
+                <div class="event-meta">
+                  <span>&#128205; 大礼堂</span>
+                  <span>&#9203; 19:00 - 21:30</span>
+                  <span>&#127908; 校学生会</span>
+                </div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date">
+                <div class="day">20</div>
+                <div class="month">9月</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">社团招新 · 百团大战</div>
+                <div class="event-meta">
+                  <span>&#128205; 大学生活动中心广场</span>
+                  <span>&#9203; 09:00 - 17:00</span>
+                  <span>&#127908; 校团委社团部</span>
+                </div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date">
+                <div class="day">28</div>
+                <div class="month">9月</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">秋季学期学术讲座 · 人工智能前沿</div>
+                <div class="event-meta">
+                  <span>&#128205; 图书馆报告厅</span>
+                  <span>&#9203; 14:00 - 16:00</span>
+                  <span>&#127908; 蔚莱科学技术学院</span>
+                </div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date">
+                <div class="day">05</div>
+                <div class="month">10月</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">2026年校园篮球联赛开幕</div>
+                <div class="event-meta">
+                  <span>&#128205; 体育馆</span>
+                  <span>&#9203; 18:30</span>
+                  <span>&#127908; 体育部 · 篮球协会</span>
+                </div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date">
+                <div class="day">12</div>
+                <div class="month">10月</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">第十届学术科技节开幕式</div>
+                <div class="event-meta">
+                  <span>&#128205; 主教学楼报告厅</span>
+                  <span>&#9203; 15:00</span>
+                  <span>&#127908; 教务处 · 科研处</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" />
+          <div>
+            <h3>华田中央大学</h3>
+            <div class="footer-brand-en">Rincatia Central University</div>
+          </div>
+          <p>立德树人 · 追求卓越 · 传承文明 · 开创未来<br/>
+             追梦深蓝，启航未来</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-link-group">
+            <h4>学校概况</h4>
+            <ul>
+              <li><a href="../site-info/overview.html">学校简介</a></li>
+              <li><a href="../site-info/history.html">历史沿革</a></li>
+              <li><a href="../site-info/advantage.html">办学优势</a></li>
+              <li><a href="../site-info/vision.html">愿景使命</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>院系设置</h4>
+            <ul>
+              <li><a href="../college/li.html">理学院</a></li>
+              <li><a href="../college/weilai.html">蔚莱科技学院</a></li>
+              <li><a href="../college/tianyu.html">田语学院</a></li>
+              <li><a href="../college/magic.html">魔法学院</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>招生就业</h4>
+            <ul>
+              <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+              <li><a href="../recruit/graduate.html">研究生招生</a></li>
+              <li><a href="../recruit/employment.html">就业服务</a></li>
+              <li><a href="../recruit/employment.html">校友之家</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>校园服务</h4>
+            <ul>
+              <li><a href="../service/library.html">图书馆</a></li>
+              <li><a href="../service/guide.html">校园指南</a></li>
+              <li><a href="../service/academic.html">教务服务</a></li>
+              <li><a href="scenery.html">校园风光</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-contact">
+          <h4>联系我们</h4>
+          <div class="footer-contact-item">
+            <span class="icon">&#128205;</span>
+            <span>华田市中央区大学路1号<br/>华田中央大学</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9742;</span>
+            <span>招生咨询：0123-4567890<br/>
+                  校办电话：0123-4567888</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9993;</span>
+            <span>info@rincatia-uni.edu.cn</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-links">
+          <a href="#">隐私政策</a>
+          <a href="#">使用条款</a>
+          <a href="#">网站地图</a>
+          <a href="#">旧版网站</a>
+        </div>
+        <p>&copy; 2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
+           京ICP备XXXXXXXX号 · 京公网安备XXXXXXXXXXXX号</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

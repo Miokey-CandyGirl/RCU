@@ -1,0 +1,483 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>学生社团 - 华田中央大学</title>
+  <meta name="description" content="华田中央大学学生社团 - 100余个学生社团，涵盖学术科技、文化艺术、体育运动等五大类" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <style>
+    .club-category-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+    .club-category-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6) var(--space-4);
+      text-align: center;
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+    }
+    .club-category-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary-100);
+    }
+    .club-category-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-4);
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--color-gold-400);
+    }
+    .club-category-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-2);
+    }
+    .club-category-count {
+      font-size: var(--font-size-xs);
+      color: var(--color-gold-600);
+      margin-bottom: var(--space-3);
+    }
+    .club-category-desc {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+    .star-club-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .star-club-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+    }
+    .star-club-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--color-gold-300);
+    }
+    .star-club-banner {
+      height: 140px;
+      background: var(--gradient-elegant);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .star-club-banner::before {
+      content: "";
+      position: absolute;
+      top: -60%;
+      right: -20%;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .star-club-banner::after {
+      content: "";
+      position: absolute;
+      bottom: -40%;
+      left: -10%;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(201, 169, 97, 0.12);
+    }
+    .star-club-logo {
+      font-size: 48px;
+      color: var(--color-white);
+      position: relative;
+      z-index: 1;
+    }
+    .star-club-body {
+      padding: var(--space-5);
+    }
+    .star-club-name {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-2);
+      font-family: var(--font-family-serif);
+    }
+    .star-club-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      font-size: var(--font-size-xs);
+      background: rgba(201, 169, 97, 0.12);
+      color: var(--color-gold-700);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-3);
+      font-weight: var(--font-weight-medium);
+    }
+    .star-club-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+    @media (max-width: 1024px) {
+      .club-category-grid { grid-template-columns: repeat(3, 1fr); }
+      .star-club-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .club-category-grid { grid-template-columns: repeat(2, 1fr); }
+      .star-club-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部信息栏 -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-links">
+        <a href="#">信息门户</a>
+        <a href="#">教务系统</a>
+        <a href="#">图书馆</a>
+        <a href="#">邮箱登录</a>
+      </div>
+      <div class="top-bar-actions">
+        <button class="lang-switch">English</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主导航栏 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="site-brand">
+        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" /></a>
+
+      <nav class="main-nav">
+        <div class="nav-item">
+          <a href="../index.html">首页</a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../site-info/overview.html">学校概况</a>
+          <ul class="nav-dropdown">
+            <li><a href="../site-info/overview.html">学校简介</a></li>
+            <li><a href="../site-info/history.html">历史沿革</a></li>
+            <li><a href="../site-info/advantage.html">办学优势</a></li>
+            <li><a href="../site-info/vision.html">愿景使命</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../college/index.html">院系设置</a>
+          <ul class="nav-dropdown">
+            <li><a href="../college/li.html">理学院</a></li>
+            <li><a href="../college/weilai.html">蔚莱科学技术学院</a></li>
+            <li><a href="../college/esports.html">电子竞技学院</a></li>
+            <li><a href="../college/art-media.html">艺术与传媒学院</a></li>
+            <li><a href="../college/literature.html">文学院</a></li>
+            <li><a href="../college/amy.html">艾米商学院</a></li>
+            <li><a href="../college/philosophy-law.html">哲学与社会法学院</a></li>
+            <li><a href="../college/siyuan.html">思源教育学院</a></li>
+            <li><a href="../college/lanyun.html">蓝云外国语学院</a></li>
+            <li><a href="../college/tianyu.html">田语学院</a></li>
+            <li><a href="../college/magic.html">魔法学院</a></li>
+            <li><a href="../college/chuangxiang.html">创想蓝天学院</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../news/school-news.html">新闻动态</a>
+          <ul class="nav-dropdown">
+            <li><a href="../news/school-news.html">校园要闻</a></li>
+            <li><a href="../news/notice.html">通知公告</a></li>
+            <li><a href="../news/academic.html">学术动态</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../recruit/undergraduate.html">招生就业</a>
+          <ul class="nav-dropdown">
+            <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+            <li><a href="../recruit/graduate.html">研究生招生</a></li>
+            <li><a href="../recruit/employment.html">就业服务</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown active">
+          <a href="scenery.html">校园文化</a>
+          <ul class="nav-dropdown">
+            <li><a href="scenery.html">校园风光</a></li>
+            <li><a href="activities.html">校园活动</a></li>
+            <li><a href="clubs.html">学生社团</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../service/library.html">校园服务</a>
+          <ul class="nav-dropdown">
+            <li><a href="../service/library.html">图书馆</a></li>
+            <li><a href="../service/guide.html">校园指南</a></li>
+            <li><a href="../service/academic.html">教务服务</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <button class="search-btn" aria-label="搜索">&#128269;</button>
+        <button class="mobile-menu-btn" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 页面 Banner -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <h1>校园文化</h1>
+      <p>Campus Culture</p>
+    </div>
+  </section>
+
+  <!-- 面包屑 -->
+  <div class="breadcrumb-wrapper">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">首页</a>
+        <span class="separator">/</span>
+        <a href="scenery.html">校园文化</a>
+        <span class="separator">/</span>
+        <span class="current">学生社团</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 页面内容 -->
+  <main class="page-content">
+    <div class="container">
+      <div class="content-sidebar-layout">
+        <!-- 左侧侧边栏 -->
+        <aside class="sidebar-nav">
+          <div class="sidebar-nav-header">
+            <h3>校园文化</h3>
+            <p>Campus Culture</p>
+          </div>
+          <ul class="sidebar-nav-menu">
+            <li><a href="scenery.html">校园风光</a></li>
+            <li><a href="activities.html">校园活动</a></li>
+            <li><a href="clubs.html" class="active">学生社团</a></li>
+          </ul>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <article class="content-article">
+          <h1>学生社团</h1>
+          <p>学校现有学生社团100余个，涵盖学术科技、文化艺术、体育运动、志愿服务、创新创业等五大类，为学生提供了丰富的课外活动平台。学校社团由校团委统一指导管理，实行社团登记注册制度，每年开展社团招新、社团文化节等品牌活动，充分发挥社团在第二课堂育人中的重要作用。</p>
+
+          <div style="margin: var(--space-8) 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
+            <img src="../assets/images/campus-club-fair.jpg" alt="社团招新百团大战" style="width: 100%; height: auto; display: block;" />
+          </div>
+          <p style="text-align: center; color: var(--color-text-tertiary); font-size: var(--font-size-sm); margin-top: calc(var(--space-4) * -1); margin-bottom: var(--space-8);">每年九月"百团大战" · 百余个社团齐聚招新</p>
+
+          <h2>社团分类</h2>
+          <div class="club-category-grid">
+            <div class="club-category-card">
+              <div class="club-category-icon">&#128300;</div>
+              <div class="club-category-title">学术科技类</div>
+              <div class="club-category-count">20+ 个社团</div>
+              <div class="club-category-desc">科技协会、数学建模协会、机器人协会等</div>
+            </div>
+            <div class="club-category-card">
+              <div class="club-category-icon">&#127912;</div>
+              <div class="club-category-title">文化艺术类</div>
+              <div class="club-category-count">30+ 个社团</div>
+              <div class="club-category-desc">舞蹈协会、音乐协会、话剧社、书画协会等</div>
+            </div>
+            <div class="club-category-card">
+              <div class="club-category-icon">&#9977;</div>
+              <div class="club-category-title">体育运动类</div>
+              <div class="club-category-count">25 个社团</div>
+              <div class="club-category-desc">足球协会、篮球协会、羽毛球协会、武术协会等</div>
+            </div>
+            <div class="club-category-card">
+              <div class="club-category-icon">&#10084;</div>
+              <div class="club-category-title">志愿服务类</div>
+              <div class="club-category-count">15 个社团</div>
+              <div class="club-category-desc">青年志愿者协会、爱心社、环保协会等</div>
+            </div>
+            <div class="club-category-card">
+              <div class="club-category-icon">&#128640;</div>
+              <div class="club-category-title">创新创业类</div>
+              <div class="club-category-count">10 个社团</div>
+              <div class="club-category-desc">创业协会、投资协会、市场营销协会等</div>
+            </div>
+          </div>
+
+          <h2>明星社团</h2>
+          <div class="star-club-grid">
+            <div class="star-club-card">
+              <div class="star-club-banner">
+                <span class="star-club-logo">&#128218;</span>
+              </div>
+              <div class="star-club-body">
+                <div class="star-club-name">田语文化协会</div>
+                <span class="star-club-tag">五星社团</span>
+                <div class="star-club-desc">致力于推广和研究田语文化，组织田语角、田语演讲比赛、田语文化节等特色活动，是全国高校中独具特色的语言文化社团。</div>
+              </div>
+            </div>
+            <div class="star-club-card">
+              <div class="star-club-banner">
+                <span class="star-club-logo">&#10024;</span>
+              </div>
+              <div class="star-club-body">
+                <div class="star-club-name">魔法研究社</div>
+                <span class="star-club-tag">特色社团</span>
+                <div class="star-club-desc">探索魔法科学与奇幻文化的交叉领域，举办魔法知识竞赛、奇幻文学创作、沉浸式魔法体验活动，深受学生喜爱。</div>
+              </div>
+            </div>
+            <div class="star-club-card">
+              <div class="star-club-banner">
+                <span class="star-club-logo">&#127918;</span>
+              </div>
+              <div class="star-club-body">
+                <div class="star-club-name">电竞俱乐部</div>
+                <span class="star-club-tag">人气社团</span>
+                <div class="star-club-desc">汇聚电竞爱好者，组织校内电竞赛事、开展电竞产业研究、培养专业电竞人才，多次在全国高校电竞联赛中取得优异成绩。</div>
+              </div>
+            </div>
+            <div class="star-club-card">
+              <div class="star-club-banner">
+                <span class="star-club-logo">&#127908;</span>
+              </div>
+              <div class="star-club-body">
+                <div class="star-club-name">合唱团</div>
+                <span class="star-club-tag">艺术典范</span>
+                <div class="star-club-desc">由各院系热爱歌唱的学生组成，演唱风格多元，多次参加全国大学生艺术展演并获奖，每年举办专场音乐会。</div>
+              </div>
+            </div>
+            <div class="star-club-card">
+              <div class="star-club-banner">
+                <span class="star-club-logo">&#128101;</span>
+              </div>
+              <div class="star-club-body">
+                <div class="star-club-name">辩论队</div>
+                <span class="star-club-tag">思辨先锋</span>
+                <div class="star-club-desc">汇聚全校辩才，开展系统辩论训练，参加国内外各类辩论赛事，曾获全国大学生辩论赛冠军，培养学生逻辑思维与表达能力。</div>
+              </div>
+            </div>
+            <div class="star-club-card">
+              <div class="star-club-banner">
+                <span class="star-club-logo">&#129309;</span>
+              </div>
+              <div class="star-club-body">
+                <div class="star-club-name">志愿者协会</div>
+                <span class="star-club-tag">公益先锋</span>
+                <div class="star-club-desc">全校规模最大的公益类社团，年志愿服务时长超2万小时，组织社区服务、环保行动、关爱帮扶等各类志愿活动。</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" />
+          <div>
+            <h3>华田中央大学</h3>
+            <div class="footer-brand-en">Rincatia Central University</div>
+          </div>
+          <p>立德树人 · 追求卓越 · 传承文明 · 开创未来<br/>
+             追梦深蓝，启航未来</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-link-group">
+            <h4>学校概况</h4>
+            <ul>
+              <li><a href="../site-info/overview.html">学校简介</a></li>
+              <li><a href="../site-info/history.html">历史沿革</a></li>
+              <li><a href="../site-info/advantage.html">办学优势</a></li>
+              <li><a href="../site-info/vision.html">愿景使命</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>院系设置</h4>
+            <ul>
+              <li><a href="../college/li.html">理学院</a></li>
+              <li><a href="../college/weilai.html">蔚莱科技学院</a></li>
+              <li><a href="../college/tianyu.html">田语学院</a></li>
+              <li><a href="../college/magic.html">魔法学院</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>招生就业</h4>
+            <ul>
+              <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+              <li><a href="../recruit/graduate.html">研究生招生</a></li>
+              <li><a href="../recruit/employment.html">就业服务</a></li>
+              <li><a href="../recruit/employment.html">校友之家</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>校园服务</h4>
+            <ul>
+              <li><a href="../service/library.html">图书馆</a></li>
+              <li><a href="../service/guide.html">校园指南</a></li>
+              <li><a href="../service/academic.html">教务服务</a></li>
+              <li><a href="scenery.html">校园风光</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-contact">
+          <h4>联系我们</h4>
+          <div class="footer-contact-item">
+            <span class="icon">&#128205;</span>
+            <span>华田市中央区大学路1号<br/>华田中央大学</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9742;</span>
+            <span>招生咨询：0123-4567890<br/>
+                  校办电话：0123-4567888</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9993;</span>
+            <span>info@rincatia-uni.edu.cn</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-links">
+          <a href="#">隐私政策</a>
+          <a href="#">使用条款</a>
+          <a href="#">网站地图</a>
+          <a href="#">旧版网站</a>
+        </div>
+        <p>&copy; 2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
+           京ICP备XXXXXXXX号 · 京公网安备XXXXXXXXXXXX号</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,661 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图书馆 - 华田中央大学</title>
+  <meta name="description" content="华田中央大学图书馆 - 馆藏纸质图书500万册，电子图书300万册，各类数据库100余个" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <style>
+    .library-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin: var(--space-8) 0;
+    }
+    .library-stat-item {
+      background: var(--gradient-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-align: center;
+      color: var(--color-white);
+      position: relative;
+      overflow: hidden;
+    }
+    .library-stat-item::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .library-stat-number {
+      font-size: var(--font-size-4xl);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-serif);
+      background: linear-gradient(135deg, var(--color-white), var(--color-gold-300));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      z-index: 1;
+    }
+    .library-stat-label {
+      font-size: var(--font-size-sm);
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: var(--space-2);
+      position: relative;
+      z-index: 1;
+    }
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-6) 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .info-table thead {
+      background: var(--gradient-primary);
+      color: var(--color-white);
+    }
+    .info-table th {
+      padding: var(--space-4) var(--space-5);
+      text-align: left;
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-base);
+    }
+    .info-table td {
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--color-border-light);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+    .info-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .info-table tbody tr:nth-child(even) {
+      background: var(--color-gray-50);
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin: var(--space-6) 0;
+    }
+    .service-item {
+      display: flex;
+      gap: var(--space-4);
+      padding: var(--space-5);
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      transition: all var(--transition-fast);
+    }
+    .service-item:hover {
+      border-color: var(--color-primary-200);
+      box-shadow: var(--shadow-md);
+    }
+    .service-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--color-primary-600);
+    }
+    .service-content h4 {
+      font-size: var(--font-size-base);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-1);
+    }
+    .service-content p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .db-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+      margin: var(--space-6) 0;
+    }
+    .db-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--color-gray-50);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+      transition: all var(--transition-fast);
+    }
+    .db-item:hover {
+      background: var(--color-primary-50);
+      border-color: var(--color-primary-100);
+    }
+    .db-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold-400);
+      font-size: 16px;
+    }
+    .db-name {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+    }
+    .db-type {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+    }
+    .contact-info-block {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin: var(--space-6) 0;
+    }
+    .contact-card {
+      padding: var(--space-6);
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      text-align: center;
+    }
+    .contact-card-icon {
+      font-size: 32px;
+      margin-bottom: var(--space-3);
+      color: var(--color-primary-600);
+    }
+    .contact-card-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-2);
+    }
+    .contact-card-detail {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+    @media (max-width: 1024px) {
+      .library-stats { grid-template-columns: repeat(2, 1fr); }
+      .service-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .library-stats { grid-template-columns: repeat(2, 1fr); }
+      .service-grid { grid-template-columns: 1fr; }
+      .db-list { grid-template-columns: 1fr; }
+      .contact-info-block { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部信息栏 -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-links">
+        <a href="#">信息门户</a>
+        <a href="#">教务系统</a>
+        <a href="#">图书馆</a>
+        <a href="#">邮箱登录</a>
+      </div>
+      <div class="top-bar-actions">
+        <button class="lang-switch">English</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主导航栏 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="site-brand">
+        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" /></a>
+
+      <nav class="main-nav">
+        <div class="nav-item">
+          <a href="../index.html">首页</a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../site-info/overview.html">学校概况</a>
+          <ul class="nav-dropdown">
+            <li><a href="../site-info/overview.html">学校简介</a></li>
+            <li><a href="../site-info/history.html">历史沿革</a></li>
+            <li><a href="../site-info/advantage.html">办学优势</a></li>
+            <li><a href="../site-info/vision.html">愿景使命</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../college/index.html">院系设置</a>
+          <ul class="nav-dropdown">
+            <li><a href="../college/li.html">理学院</a></li>
+            <li><a href="../college/weilai.html">蔚莱科学技术学院</a></li>
+            <li><a href="../college/esports.html">电子竞技学院</a></li>
+            <li><a href="../college/art-media.html">艺术与传媒学院</a></li>
+            <li><a href="../college/literature.html">文学院</a></li>
+            <li><a href="../college/amy.html">艾米商学院</a></li>
+            <li><a href="../college/philosophy-law.html">哲学与社会法学院</a></li>
+            <li><a href="../college/siyuan.html">思源教育学院</a></li>
+            <li><a href="../college/lanyun.html">蓝云外国语学院</a></li>
+            <li><a href="../college/tianyu.html">田语学院</a></li>
+            <li><a href="../college/magic.html">魔法学院</a></li>
+            <li><a href="../college/chuangxiang.html">创想蓝天学院</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../news/school-news.html">新闻动态</a>
+          <ul class="nav-dropdown">
+            <li><a href="../news/school-news.html">校园要闻</a></li>
+            <li><a href="../news/notice.html">通知公告</a></li>
+            <li><a href="../news/academic.html">学术动态</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../recruit/undergraduate.html">招生就业</a>
+          <ul class="nav-dropdown">
+            <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+            <li><a href="../recruit/graduate.html">研究生招生</a></li>
+            <li><a href="../recruit/employment.html">就业服务</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../campus-culture/scenery.html">校园文化</a>
+          <ul class="nav-dropdown">
+            <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            <li><a href="../campus-culture/activities.html">校园活动</a></li>
+            <li><a href="../campus-culture/clubs.html">学生社团</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown active">
+          <a href="library.html">校园服务</a>
+          <ul class="nav-dropdown">
+            <li><a href="library.html">图书馆</a></li>
+            <li><a href="guide.html">校园指南</a></li>
+            <li><a href="academic.html">教务服务</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <button class="search-btn" aria-label="搜索">&#128269;</button>
+        <button class="mobile-menu-btn" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 页面 Banner -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <h1>校园服务</h1>
+      <p>Campus Services</p>
+    </div>
+  </section>
+
+  <!-- 面包屑 -->
+  <div class="breadcrumb-wrapper">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">首页</a>
+        <span class="separator">/</span>
+        <a href="library.html">校园服务</a>
+        <span class="separator">/</span>
+        <span class="current">图书馆</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 页面内容 -->
+  <main class="page-content">
+    <div class="container">
+      <div class="content-sidebar-layout">
+        <!-- 左侧侧边栏 -->
+        <aside class="sidebar-nav">
+          <div class="sidebar-nav-header">
+            <h3>校园服务</h3>
+            <p>Campus Services</p>
+          </div>
+          <ul class="sidebar-nav-menu">
+            <li><a href="library.html" class="active">图书馆</a></li>
+            <li><a href="guide.html">校园指南</a></li>
+            <li><a href="academic.html">教务服务</a></li>
+          </ul>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <article class="content-article">
+          <h1>图书馆</h1>
+          <p>华田中央大学图书馆是学校的文献信息中心，建筑面积4.5万平方米，阅览座位5000余个。馆藏纸质图书500万册，电子图书300万册，各类数据库100余个。图书馆坚持"读者第一、服务育人"的宗旨，为全校师生提供优质的文献信息服务，是学校教学科研的重要支撑平台。</p>
+
+          <div class="library-stats">
+            <div class="library-stat-item">
+              <div class="library-stat-number">500万</div>
+              <div class="library-stat-label">纸质图书</div>
+            </div>
+            <div class="library-stat-item">
+              <div class="library-stat-number">300万</div>
+              <div class="library-stat-label">电子图书</div>
+            </div>
+            <div class="library-stat-item">
+              <div class="library-stat-number">100+</div>
+              <div class="library-stat-label">数据库资源</div>
+            </div>
+            <div class="library-stat-item">
+              <div class="library-stat-number">5000+</div>
+              <div class="library-stat-label">阅览座位</div>
+            </div>
+          </div>
+
+          <h2>馆藏资源</h2>
+          <p>图书馆馆藏资源丰富，涵盖人文科学、社会科学、自然科学、工程技术等各学科领域，形成了以文理为基础、教师教育为特色、新兴交叉学科为亮点的馆藏体系。</p>
+          <ul>
+            <li><strong>中文图书：</strong>馆藏中文图书380万册，涵盖各学科门类</li>
+            <li><strong>外文图书：</strong>馆藏外文图书120万册，以英文为主，兼收日、法、德等语种</li>
+            <li><strong>期刊报纸：</strong>订阅中外文期刊3000余种，报纸200余种</li>
+            <li><strong>特种文献：</strong>古籍善本、学位论文、会议文献、标准专利等</li>
+            <li><strong>数字资源：</strong>电子期刊、电子图书、学位论文、音视频资源等</li>
+          </ul>
+
+          <h2>开放时间</h2>
+          <table class="info-table">
+            <thead>
+              <tr>
+                <th>服务区域</th>
+                <th>周一至周五</th>
+                <th>周六至周日</th>
+                <th>备注</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>总服务台</td>
+                <td>08:00 - 22:00</td>
+                <td>09:00 - 22:00</td>
+                <td>借还书、读者咨询</td>
+              </tr>
+              <tr>
+                <td>中文图书借阅区</td>
+                <td>08:00 - 22:00</td>
+                <td>09:00 - 22:00</td>
+                <td>一至三楼</td>
+              </tr>
+              <tr>
+                <td>外文图书借阅区</td>
+                <td>08:00 - 22:00</td>
+                <td>09:00 - 17:00</td>
+                <td>四楼</td>
+              </tr>
+              <tr>
+                <td>期刊阅览区</td>
+                <td>08:00 - 22:00</td>
+                <td>09:00 - 22:00</td>
+                <td>五楼</td>
+              </tr>
+              <tr>
+                <td>电子阅览室</td>
+                <td>08:00 - 22:00</td>
+                <td>09:00 - 22:00</td>
+                <td>六楼</td>
+              </tr>
+              <tr>
+                <td>特藏文献室</td>
+                <td>08:30 - 11:30 14:00 - 17:00</td>
+                <td>闭馆</td>
+                <td>七楼，需预约</td>
+              </tr>
+              <tr>
+                <td>自习区</td>
+                <td>07:00 - 23:00</td>
+                <td>07:00 - 23:00</td>
+                <td>各楼层开放区域</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size: var(--font-size-sm); color: var(--color-text-tertiary);">注：寒暑假及法定节假日开放时间另行通知，请关注图书馆官网公告。</p>
+
+          <h2>服务指南</h2>
+          <div class="service-grid">
+            <div class="service-item">
+              <div class="service-icon">&#128214;</div>
+              <div class="service-content">
+                <h4>借阅规则</h4>
+                <p>本科生可借图书30册，研究生50册，借期30天，可续借一次。</p>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">&#128186;</div>
+              <div class="service-content">
+                <h4>座位预约</h4>
+                <p>通过图书馆微信公众号或APP预约自习座位，扫码签到入座。</p>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">&#128229;</div>
+              <div class="service-content">
+                <h4>文献传递</h4>
+                <p>馆际互借与文献传递服务，获取本馆未收藏的文献资源。</p>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">&#128218;</div>
+              <div class="service-content">
+                <h4>新书推荐</h4>
+                <p>每月更新新书通报，读者可推荐图书，参与馆藏建设。</p>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">&#128187;</div>
+              <div class="service-content">
+                <h4>电子资源</h4>
+                <p>校园网内访问各类数据库，校外通过VPN或CARSI访问。</p>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">&#127891;</div>
+              <div class="service-content">
+                <h4>读者培训</h4>
+                <p>定期开展数据库使用、文献检索、论文写作等培训讲座。</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>数字资源</h2>
+          <p>图书馆拥有丰富的数字资源，涵盖中外文期刊、学位论文、电子图书、音视频等多种类型，为教学科研提供强有力的文献保障。</p>
+          <div class="db-list">
+            <div class="db-item">
+              <div class="db-icon">CN</div>
+              <div>
+                <div class="db-name">中国知网 (CNKI)</div>
+                <div class="db-type">中文期刊 · 学位论文 · 会议</div>
+              </div>
+            </div>
+            <div class="db-item">
+              <div class="db-icon">万</div>
+              <div>
+                <div class="db-name">万方数据知识服务平台</div>
+                <div class="db-type">中文期刊 · 学位论文 · 专利</div>
+              </div>
+            </div>
+            <div class="db-item">
+              <div class="db-icon">维</div>
+              <div>
+                <div class="db-name">维普期刊资源整合服务平台</div>
+                <div class="db-type">中文科技期刊</div>
+              </div>
+            </div>
+            <div class="db-item">
+              <div class="db-icon">WS</div>
+              <div>
+                <div class="db-name">Web of Science</div>
+                <div class="db-type">外文期刊 · SCI/SSCI</div>
+              </div>
+            </div>
+            <div class="db-item">
+              <div class="db-icon">SD</div>
+              <div>
+                <div class="db-name">ScienceDirect</div>
+                <div class="db-type">外文期刊 · 爱思唯尔</div>
+              </div>
+            </div>
+            <div class="db-item">
+              <div class="db-icon">NH</div>
+              <div>
+                <div class="db-name">超星数字图书馆</div>
+                <div class="db-type">电子图书 · 中文</div>
+              </div>
+            </div>
+            <div class="db-item">
+              <div class="db-icon">读</div>
+              <div>
+                <div class="db-name">读秀学术搜索</div>
+                <div class="db-type">学术搜索 · 文献传递</div>
+              </div>
+            </div>
+            <div class="db-item">
+              <div class="db-icon">EI</div>
+              <div>
+                <div class="db-name">Engineering Village</div>
+                <div class="db-type">工程索引 · EI</div>
+              </div>
+            </div>
+          </div>
+
+          <h2>联系我们</h2>
+          <div class="contact-info-block">
+            <div class="contact-card">
+              <div class="contact-card-icon">&#128205;</div>
+              <div class="contact-card-title">图书馆地址</div>
+              <div class="contact-card-detail">
+                华田市中央区大学路1号<br/>
+                华田中央大学图书馆
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon">&#9742;</div>
+              <div class="contact-card-title">联系电话</div>
+              <div class="contact-card-detail">
+                总服务台：0123-4567800<br/>
+                资源建设部：0123-4567801
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon">&#9993;</div>
+              <div class="contact-card-title">电子邮箱</div>
+              <div class="contact-card-detail">
+                library@rincatia-uni.edu.cn<br/>
+                读者意见：reader@rincatia-uni.edu.cn
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" />
+          <div>
+            <h3>华田中央大学</h3>
+            <div class="footer-brand-en">Rincatia Central University</div>
+          </div>
+          <p>立德树人 · 追求卓越 · 传承文明 · 开创未来<br/>
+             追梦深蓝，启航未来</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-link-group">
+            <h4>学校概况</h4>
+            <ul>
+              <li><a href="../site-info/overview.html">学校简介</a></li>
+              <li><a href="../site-info/history.html">历史沿革</a></li>
+              <li><a href="../site-info/advantage.html">办学优势</a></li>
+              <li><a href="../site-info/vision.html">愿景使命</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>院系设置</h4>
+            <ul>
+              <li><a href="../college/li.html">理学院</a></li>
+              <li><a href="../college/weilai.html">蔚莱科技学院</a></li>
+              <li><a href="../college/tianyu.html">田语学院</a></li>
+              <li><a href="../college/magic.html">魔法学院</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>招生就业</h4>
+            <ul>
+              <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+              <li><a href="../recruit/graduate.html">研究生招生</a></li>
+              <li><a href="../recruit/employment.html">就业服务</a></li>
+              <li><a href="../recruit/employment.html">校友之家</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>校园服务</h4>
+            <ul>
+              <li><a href="library.html">图书馆</a></li>
+              <li><a href="guide.html">校园指南</a></li>
+              <li><a href="academic.html">教务服务</a></li>
+              <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-contact">
+          <h4>联系我们</h4>
+          <div class="footer-contact-item">
+            <span class="icon">&#128205;</span>
+            <span>华田市中央区大学路1号<br/>华田中央大学</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9742;</span>
+            <span>招生咨询：0123-4567890<br/>
+                  校办电话：0123-4567888</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9993;</span>
+            <span>info@rincatia-uni.edu.cn</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-links">
+          <a href="#">隐私政策</a>
+          <a href="#">使用条款</a>
+          <a href="#">网站地图</a>
+          <a href="#">旧版网站</a>
+        </div>
+        <p>&copy; 2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
+           京ICP备XXXXXXXX号 · 京公网安备XXXXXXXXXXXX号</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

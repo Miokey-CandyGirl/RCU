@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>页面未找到 - 华田中央大学</title>
+  <meta name="description" content="页面未找到 - 华田中央大学" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+    }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC",
+        "Source Han Sans CN", "Hiragino Sans GB", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-primary-600) 50%, var(--color-primary-500) 100%);
+      color: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(201, 169, 97, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(45, 95, 154, 0.35) 0%, transparent 50%);
+    }
+    body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M40 40L0 0h20L40 20 60 0h20L40 40zm0 0l40 40H60L40 60 20 80H0l40-40z'/%3C/g%3E/g%3E/svg%3E");
+      opacity: 0.6;
+    }
+    .error-container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 24px;
+      max-width: 600px;
+      animation: fadeInUp 0.8s ease;
+    }
+    .error-code {
+      font-size: 180px;
+      font-weight: 800;
+      line-height: 1;
+      font-family: "Noto Serif SC", "Source Han Serif CN", "Songti SC", Georgia, serif;
+      letter-spacing: 8px;
+      background: linear-gradient(135deg, var(--color-white) 0%, var(--color-gold-300) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+      margin-bottom: 24px;
+    }
+    .error-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--color-white);
+      margin-bottom: 16px;
+      font-family: "Noto Serif SC", "Source Han Serif CN", "Songti SC", Georgia, serif;
+      letter-spacing: 4px;
+    }
+    .error-subtitle {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 48px;
+      line-height: 1.8;
+      letter-spacing: 1px;
+    }
+    .error-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 36px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      text-decoration: none;
+      line-height: 1.5;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--color-gold-600) 0%, var(--color-gold-400) 100%);
+      color: var(--color-white);
+      box-shadow: 0 4px 20px rgba(201, 169, 97, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(201, 169, 97, 0.4);
+      color: var(--color-white);
+    }
+    .btn-outline-white {
+      background: transparent;
+      color: var(--color-white);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+    .btn-outline-white:hover {
+      background: var(--color-white);
+      color: var(--color-primary-700);
+      border-color: var(--color-white);
+      transform: translateY(-2px);
+    }
+    .back-link {
+      margin-top: 40px;
+    }
+    .back-link a {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-link a:hover {
+      color: var(--color-gold-400);
+    }
+    .brand-small {
+      position: absolute;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+    .brand-logo-img {
+      height: 48px;
+      width: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+      opacity: 0.95;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 768px) {
+      .error-code {
+        font-size: 120px;
+      }
+      .error-title {
+        font-size: 28px;
+      }
+      .error-subtitle {
+        font-size: 16px;
+      }
+    }
+    @media (max-width: 480px) {
+      .error-code {
+        font-size: 90px;
+        letter-spacing: 4px;
+      }
+      .error-title {
+        font-size: 24px;
+        letter-spacing: 2px;
+      }
+      .brand-logo-img {
+        height: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="brand-small">
+    <img src="assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="brand-logo-img" />
+  </div>
+
+  <div class="error-container">
+    <div class="error-code">404</div>
+    <h1 class="error-title">页面未找到</h1>
+    <p class="error-subtitle">您访问的页面不存在或已被移除<br/>请检查网址是否正确，或返回首页继续浏览</p>
+    <div class="error-actions">
+      <a href="index.html" class="btn btn-primary">&#127968; 返回首页</a>
+      <a href="javascript:history.back()" class="btn btn-outline-white">&#8592; 返回上一页</a>
+    </div>
+    <div class="back-link">
+      <a href="index.html">返回华田中央大学首页</a>
+    </div>
+  </div>
+</body>
+</html>

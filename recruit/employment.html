@@ -1,0 +1,877 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>就业服务 - 华田中央大学</title>
+  <meta name="description" content="华田中央大学就业服务 - 就业数据、校园招聘、职业指导、基层就业" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <style>
+    /* 就业数据统计卡片 */
+    .stat-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+      margin: var(--space-10) 0;
+    }
+
+    .stat-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8) var(--space-6);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border-light);
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary-200);
+    }
+
+    .stat-card-number {
+      font-size: var(--font-size-5xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-700);
+      font-family: var(--font-family-serif);
+      line-height: 1;
+      margin-bottom: var(--space-3);
+      background: linear-gradient(135deg, var(--color-primary-700), var(--color-gold-500));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-card-number .percent {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-semibold);
+      margin-left: 2px;
+    }
+
+    .stat-card-label {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .stat-card-icon {
+      font-size: 32px;
+      margin-bottom: var(--space-4);
+      opacity: 0.8;
+    }
+
+    /* 就业服务 */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+      margin: var(--space-6) 0;
+    }
+
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-5);
+      padding: var(--space-6);
+      background: var(--color-gray-50);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      transition: all var(--transition-normal);
+    }
+
+    .service-item:hover {
+      background: var(--color-white);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary-200);
+      transform: translateY(-2px);
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--color-gold-400);
+      flex-shrink: 0;
+    }
+
+    .service-content h3 {
+      font-size: var(--font-size-lg);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-2);
+      font-family: var(--font-family-serif);
+    }
+
+    .service-content p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* 招聘信息列表 */
+    .job-list {
+      margin: var(--space-6) 0;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .job-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      padding: var(--space-5) var(--space-6);
+      border-bottom: 1px solid var(--color-border-light);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .job-item:last-child {
+      border-bottom: none;
+    }
+
+    .job-item:hover {
+      background: var(--color-primary-50);
+      padding-left: calc(var(--space-6) + var(--space-2));
+    }
+
+    .job-date {
+      flex-shrink: 0;
+      text-align: center;
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-primary-50);
+      border-radius: var(--radius-sm);
+      min-width: 64px;
+    }
+
+    .job-date .day {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-700);
+      line-height: 1;
+      font-family: var(--font-family-serif);
+    }
+
+    .job-date .month-year {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+
+    .job-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .job-company {
+      font-size: var(--font-size-base);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-medium);
+      margin-bottom: var(--space-1);
+      transition: color var(--transition-fast);
+    }
+
+    .job-item:hover .job-company {
+      color: var(--color-primary-700);
+    }
+
+    .job-position {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .job-location {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-tertiary);
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-gray-100);
+      border-radius: var(--radius-sm);
+    }
+
+    /* 基层就业 */
+    .grassroots-section {
+      margin: var(--space-6) 0;
+    }
+
+    .grassroots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin-top: var(--space-6);
+    }
+
+    .grassroots-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-align: center;
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+    }
+
+    .grassroots-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-gold-300);
+    }
+
+    .grassroots-card-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto var(--space-4);
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-gold-400), var(--color-gold-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: var(--color-white);
+    }
+
+    .grassroots-card h3 {
+      font-size: var(--font-size-lg);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-2);
+      font-family: var(--font-family-serif);
+    }
+
+    .grassroots-card p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* 校友风采 */
+    .alumni-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+      margin: var(--space-6) 0;
+    }
+
+    .alumni-card {
+      display: flex;
+      gap: var(--space-5);
+      padding: var(--space-6);
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+    }
+
+    .alumni-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: var(--color-primary-200);
+    }
+
+    .alumni-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: var(--color-gold-400);
+      flex-shrink: 0;
+    }
+
+    .alumni-info h3 {
+      font-size: var(--font-size-lg);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-1);
+      font-family: var(--font-family-serif);
+    }
+
+    .alumni-grad {
+      font-size: var(--font-size-xs);
+      color: var(--color-gold-600);
+      margin-bottom: var(--space-3);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .alumni-info p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* 联系信息 */
+    .contact-info-box {
+      background: var(--color-gray-50);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      margin: var(--space-6) 0;
+      border: 1px solid var(--color-border-light);
+    }
+
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+
+    .contact-info-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--color-primary-600);
+      flex-shrink: 0;
+    }
+
+    .contact-info-item h4 {
+      font-size: var(--font-size-base);
+      color: var(--color-primary-800);
+      margin-bottom: var(--space-1);
+    }
+
+    .contact-info-item p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1024px) {
+      .stat-cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .grassroots-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .stat-cards-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+      .stat-card { padding: var(--space-6) var(--space-4); }
+      .stat-card-number { font-size: var(--font-size-4xl); }
+      .service-grid { grid-template-columns: 1fr; }
+      .grassroots-grid { grid-template-columns: 1fr; }
+      .alumni-list { grid-template-columns: 1fr; }
+      .contact-info-grid { grid-template-columns: 1fr; }
+      .job-location { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部信息栏 -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-links">
+        <a href="#">信息门户</a>
+        <a href="#">教务系统</a>
+        <a href="#">图书馆</a>
+        <a href="#">邮箱登录</a>
+      </div>
+      <div class="top-bar-actions">
+        <button class="lang-switch">English</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主导航栏 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="site-brand">
+        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" /></a>
+
+      <nav class="main-nav">
+        <div class="nav-item">
+          <a href="../index.html">首页</a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../site-info/overview.html">学校概况</a>
+          <ul class="nav-dropdown">
+            <li><a href="../site-info/overview.html">学校简介</a></li>
+            <li><a href="../site-info/history.html">历史沿革</a></li>
+            <li><a href="../site-info/advantage.html">办学优势</a></li>
+            <li><a href="../site-info/vision.html">愿景使命</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../college/index.html">院系设置</a>
+          <ul class="nav-dropdown">
+            <li><a href="../college/li.html">理学院</a></li>
+            <li><a href="../college/weilai.html">蔚莱科学技术学院</a></li>
+            <li><a href="../college/esports.html">电子竞技学院</a></li>
+            <li><a href="../college/art-media.html">艺术与传媒学院</a></li>
+            <li><a href="../college/literature.html">文学院</a></li>
+            <li><a href="../college/amy.html">艾米商学院</a></li>
+            <li><a href="../college/philosophy-law.html">哲学与社会法学院</a></li>
+            <li><a href="../college/siyuan.html">思源教育学院</a></li>
+            <li><a href="../college/lanyun.html">蓝云外国语学院</a></li>
+            <li><a href="../college/tianyu.html">田语学院</a></li>
+            <li><a href="../college/magic.html">魔法学院</a></li>
+            <li><a href="../college/chuangxiang.html">创想蓝天学院</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../news/school-news.html">新闻动态</a>
+          <ul class="nav-dropdown">
+            <li><a href="../news/school-news.html">校园要闻</a></li>
+            <li><a href="../news/notice.html">通知公告</a></li>
+            <li><a href="../news/academic.html">学术动态</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown active">
+          <a href="undergraduate.html">招生就业</a>
+          <ul class="nav-dropdown">
+            <li><a href="undergraduate.html">本科招生</a></li>
+            <li><a href="graduate.html">研究生招生</a></li>
+            <li><a href="employment.html">就业服务</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../campus-culture/scenery.html">校园文化</a>
+          <ul class="nav-dropdown">
+            <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            <li><a href="../campus-culture/activities.html">校园活动</a></li>
+            <li><a href="../campus-culture/clubs.html">学生社团</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../service/library.html">校园服务</a>
+          <ul class="nav-dropdown">
+            <li><a href="../service/library.html">图书馆</a></li>
+            <li><a href="../service/guide.html">校园指南</a></li>
+            <li><a href="../service/academic.html">教务服务</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <button class="search-btn" aria-label="搜索">&#128269;</button>
+        <button class="mobile-menu-btn" aria-label="菜单">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 页面 Banner -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <h1>招生就业</h1>
+      <p>Admission &amp; Career</p>
+    </div>
+  </section>
+
+  <!-- 面包屑 -->
+  <div class="breadcrumb-wrapper">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">首页</a>
+        <span class="separator">/</span>
+        <a href="undergraduate.html">招生就业</a>
+        <span class="separator">/</span>
+        <span class="current">就业服务</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 页面内容 -->
+  <main class="page-content">
+    <div class="container">
+      <div class="content-sidebar-layout">
+        <!-- 左侧侧边栏 -->
+        <aside class="sidebar-nav">
+          <div class="sidebar-nav-header">
+            <h3>招生就业</h3>
+            <p>Admission &amp; Career</p>
+          </div>
+          <ul class="sidebar-nav-menu">
+            <li><a href="undergraduate.html">本科招生</a></li>
+            <li><a href="graduate.html">研究生招生</a></li>
+            <li><a href="employment.html" class="active">就业服务</a></li>
+          </ul>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <article class="content-article">
+          <h1>就业服务</h1>
+          <p>学校高度重视毕业生就业工作，建立了完善的就业服务体系。就业指导中心致力于为学生提供全方位、专业化的职业指导与就业服务，助力学生实现高质量就业。近年来毕业生就业率保持在95%以上，就业质量稳步提升。</p>
+          <p>学校与500余家知名企业建立了稳定的校企合作关系，每年举办各类校园招聘活动数百场，为毕业生提供充足的就业岗位和广阔的发展空间。</p>
+
+          <!-- 就业数据统计 -->
+          <div class="stat-cards-grid">
+            <div class="stat-card">
+              <div class="stat-card-icon">&#128200;</div>
+              <div class="stat-card-number">95.6<span class="percent">%</span></div>
+              <div class="stat-card-label">就业率</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">&#127891;</div>
+              <div class="stat-card-number">35.2<span class="percent">%</span></div>
+              <div class="stat-card-label">深造率</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">&#127970;</div>
+              <div class="stat-card-number">42.8<span class="percent">%</span></div>
+              <div class="stat-card-label">重点单位就业率</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">&#11088;</div>
+              <div class="stat-card-number">96.3<span class="percent">%</span></div>
+              <div class="stat-card-label">满意度</div>
+            </div>
+          </div>
+
+          <h2>就业服务</h2>
+          <p>就业指导中心为全校学生提供全方位的职业发展指导和就业服务，帮助学生规划职业发展路径，提升就业竞争力。</p>
+
+          <div class="service-grid">
+            <div class="service-item">
+              <div class="service-icon">&#128221;</div>
+              <div class="service-content">
+                <h3>职业规划指导</h3>
+                <p>开设职业生涯规划课程，提供职业测评、一对一职业咨询等服务，帮助学生认识自我、明确职业发展方向，制定个性化的职业发展规划。</p>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">&#128172;</div>
+              <div class="service-content">
+                <h3>就业咨询服务</h3>
+                <p>提供简历制作、面试技巧、求职礼仪等方面的指导，定期举办求职技能培训讲座和模拟面试活动，提升学生的求职能力和技巧。</p>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">&#127970;</div>
+              <div class="service-content">
+                <h3>校园招聘活动</h3>
+                <p>每年举办大型校园招聘会、专场招聘会、企业宣讲会等各类招聘活动数百场，为毕业生和用人单位搭建高效的供需对接平台。</p>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">&#127968;</div>
+              <div class="service-content">
+                <h3>实习基地建设</h3>
+                <p>与500余家知名企业建立实习基地合作关系，为学生提供优质的实习实践机会，提升学生的实践能力和职业素养。</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>招聘信息</h2>
+          <p>以下是近期校园招聘信息，更多招聘详情请登录就业信息网查询。</p>
+
+          <div class="job-list">
+            <div class="job-item">
+              <div class="job-date">
+                <div class="day">22</div>
+                <div class="month-year">2026.08</div>
+              </div>
+              <div class="job-info">
+                <div class="job-company">华田科技集团有限公司</div>
+                <div class="job-position">软件开发工程师、算法工程师、产品经理</div>
+              </div>
+              <div class="job-location">
+                <span>&#128205;</span>
+                <span>华田市</span>
+              </div>
+            </div>
+
+            <div class="job-item">
+              <div class="job-date">
+                <div class="day">20</div>
+                <div class="month-year">2026.08</div>
+              </div>
+              <div class="job-info">
+                <div class="job-company">中央教育出版集团</div>
+                <div class="job-position">编辑、策划编辑、数字内容运营</div>
+              </div>
+              <div class="job-location">
+                <span>&#128205;</span>
+                <span>北京市</span>
+              </div>
+            </div>
+
+            <div class="job-item">
+              <div class="job-date">
+                <div class="day">18</div>
+                <div class="month-year">2026.08</div>
+              </div>
+              <div class="job-info">
+                <div class="job-company">蓝海银行股份有限公司</div>
+                <div class="job-position">管培生、金融科技岗、风险控制</div>
+              </div>
+              <div class="job-location">
+                <span>&#128205;</span>
+                <span>上海市</span>
+              </div>
+            </div>
+
+            <div class="job-item">
+              <div class="job-date">
+                <div class="day">15</div>
+                <div class="month-year">2026.08</div>
+              </div>
+              <div class="job-info">
+                <div class="job-company">星耀传媒集团</div>
+                <div class="job-position">记者、编辑、新媒体运营、编导</div>
+              </div>
+              <div class="job-location">
+                <span>&#128205;</span>
+                <span>深川市</span>
+              </div>
+            </div>
+
+            <div class="job-item">
+              <div class="job-date">
+                <div class="day">12</div>
+                <div class="month-year">2026.08</div>
+              </div>
+              <div class="job-info">
+                <div class="job-company">思源教育科技有限公司</div>
+                <div class="job-position">教研老师、课程顾问、产品研发</div>
+              </div>
+              <div class="job-location">
+                <span>&#128205;</span>
+                <span>华田市</span>
+              </div>
+            </div>
+
+            <div class="job-item">
+              <div class="job-date">
+                <div class="day">10</div>
+                <div class="month-year">2026.08</div>
+              </div>
+              <div class="job-info">
+                <div class="job-company">国电能源研究院</div>
+                <div class="job-position">科研助理、工程技术人员、行政管理</div>
+              </div>
+              <div class="job-location">
+                <span>&#128205;</span>
+                <span>南京市</span>
+              </div>
+            </div>
+          </div>
+
+          <h2>基层就业</h2>
+          <p>学校积极响应国家号召，鼓励和引导毕业生到基层、到西部、到祖国最需要的地方建功立业。学校建立了完善的基层就业支持体系，为投身基层的毕业生提供政策指导、培训服务和跟踪关怀。</p>
+
+          <div class="grassroots-grid">
+            <div class="grassroots-card">
+              <div class="grassroots-card-icon">&#127757;</div>
+              <h3>西部计划</h3>
+              <p>招募优秀毕业生到西部基层开展志愿服务，服务期1-3年，享受国家相关政策支持和生活补贴。</p>
+            </div>
+            <div class="grassroots-card">
+              <div class="grassroots-card-icon">&#127903;</div>
+              <h3>选调生</h3>
+              <p>选拔品学兼优的应届毕业生到基层党政机关工作，作为党政领导干部后备人选进行重点培养。</p>
+            </div>
+            <div class="grassroots-card">
+              <div class="grassroots-card-icon">&#127968;</div>
+              <h3>三支一扶</h3>
+              <p>选派高校毕业生到农村基层从事支教、支农、支医和扶贫工作，服务期满享受相关优惠政策。</p>
+            </div>
+          </div>
+
+          <h2>校友风采</h2>
+          <p>广大校友在各行各业取得了优异成绩，为国家建设和社会发展做出了重要贡献，是学校最宝贵的财富和骄傲。</p>
+
+          <div class="alumni-list">
+            <div class="alumni-card">
+              <div class="alumni-avatar">&#128104;</div>
+              <div class="alumni-info">
+                <h3>张明远</h3>
+                <div class="alumni-grad">2010届 计算机科学与技术专业</div>
+                <p>现任星耀科技集团首席技术官，曾获国家科技进步二等奖。毕业后一直从事人工智能领域研究，带领团队取得多项突破性成果。</p>
+              </div>
+            </div>
+
+            <div class="alumni-card">
+              <div class="alumni-avatar">&#128105;</div>
+              <div class="alumni-info">
+                <h3>李雪芳</h3>
+                <div class="alumni-grad">2008届 汉语言文学专业</div>
+                <p>著名作家、文学评论家，中国作家协会会员。多部作品荣获国家级文学奖项，作品被翻译成十多种语言在海外出版。</p>
+              </div>
+            </div>
+
+            <div class="alumni-card">
+              <div class="alumni-avatar">&#128104;</div>
+              <div class="alumni-info">
+                <h3>王建华</h3>
+                <div class="alumni-grad">2005届 教育学专业</div>
+                <p>全国模范教师、特级教师。扎根西部教育事业二十年，致力于乡村教育发展，荣获"全国最美教师"称号。</p>
+              </div>
+            </div>
+
+            <div class="alumni-card">
+              <div class="alumni-avatar">&#128105;</div>
+              <div class="alumni-info">
+                <h3>陈思琪</h3>
+                <div class="alumni-grad">2012届 数学与应用数学专业</div>
+                <p>知名高校教授、博士生导师，国家杰出青年科学基金获得者。在数学基础研究领域取得重要突破，发表高水平论文50余篇。</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>联系我们</h2>
+          <p>如有就业相关问题，欢迎联系就业指导中心。我们将竭诚为广大毕业生和用人单位提供优质服务。</p>
+
+          <div class="contact-info-box">
+            <div class="contact-info-grid">
+              <div class="contact-info-item">
+                <div class="contact-info-icon">&#9742;</div>
+                <div>
+                  <h4>咨询电话</h4>
+                  <p>0123-4567870<br />0123-4567871</p>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon">&#9993;</div>
+                <div>
+                  <h4>电子邮箱</h4>
+                  <p>job@rincatia-uni.edu.cn</p>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon">&#128205;</div>
+                <div>
+                  <h4>办公地址</h4>
+                  <p>华田市中央区大学路1号<br />华田中央大学就业指导中心</p>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <div class="contact-info-icon">&#128336;</div>
+                <div>
+                  <h4>办公时间</h4>
+                  <p>周一至周五<br />8:30 - 11:30，14:00 - 17:00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" />
+          <div>
+            <h3>华田中央大学</h3>
+            <div class="footer-brand-en">Rincatia Central University</div>
+          </div>
+          <p>立德树人 · 追求卓越 · 传承文明 · 开创未来<br/>
+             追梦深蓝，启航未来</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-link-group">
+            <h4>学校概况</h4>
+            <ul>
+              <li><a href="../site-info/overview.html">学校简介</a></li>
+              <li><a href="../site-info/history.html">历史沿革</a></li>
+              <li><a href="../site-info/advantage.html">办学优势</a></li>
+              <li><a href="../site-info/vision.html">愿景使命</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>院系设置</h4>
+            <ul>
+              <li><a href="../college/li.html">理学院</a></li>
+              <li><a href="../college/weilai.html">蔚莱科技学院</a></li>
+              <li><a href="../college/tianyu.html">田语学院</a></li>
+              <li><a href="../college/magic.html">魔法学院</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>招生就业</h4>
+            <ul>
+              <li><a href="undergraduate.html">本科招生</a></li>
+              <li><a href="graduate.html">研究生招生</a></li>
+              <li><a href="employment.html">就业服务</a></li>
+              <li><a href="employment.html">校友之家</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>校园服务</h4>
+            <ul>
+              <li><a href="../service/library.html">图书馆</a></li>
+              <li><a href="../service/guide.html">校园指南</a></li>
+              <li><a href="../service/academic.html">教务服务</a></li>
+              <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-contact">
+          <h4>联系我们</h4>
+          <div class="footer-contact-item">
+            <span class="icon">&#128205;</span>
+            <span>华田市中央区大学路1号<br/>华田中央大学</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9742;</span>
+            <span>招生咨询：0123-4567890<br/>
+                  校办电话：0123-4567888</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">&#9993;</span>
+            <span>info@rincatia-uni.edu.cn</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-links">
+          <a href="#">隐私政策</a>
+          <a href="#">使用条款</a>
+          <a href="#">网站地图</a>
+          <a href="#">旧版网站</a>
+        </div>
+        <p>&copy; 2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
+           京ICP备XXXXXXXX号 · 京公网安备XXXXXXXXXXXX号</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
