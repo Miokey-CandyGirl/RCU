@@ -1,57 +1,270 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>魔法学院 - 华田中央大学</title>
-  <meta name="description" content="华田中央大学魔法学院 - 全国首个魔法类专业学院，探索魔法理论与应用前沿" />
+  <title>魔法学院（灵质科学与工程学院）- 华田中央大学</title>
+  <meta name="description" content="华田中央大学魔法学院（灵质科学与工程学院）- 国内首家灵质粒子科研与教学机构，探索灵质粒子的声波调控机制与物质构造应用" />
   <link rel="stylesheet" href="../assets/css/tokens.css" />
   <link rel="stylesheet" href="../assets/css/base.css" />
   <link rel="stylesheet" href="../assets/css/layout.css" />
   <link rel="stylesheet" href="../assets/css/components.css" />
   <style>
-    /* 魔法学院紫色主题 */
+    /* 魔法学院深紫+金色主题 */
     .college-hero.magic-theme {
-      background: linear-gradient(135deg, #4A235A, #6C3483);
-    }
-    .college-hero.magic-theme .college-hero-en {
-      color: #F4D03F;
+      background: linear-gradient(135deg, #1a0d2e 0%, #2d1b4e 40%, #4a2c7a 100%);
+      position: relative;
+      overflow: hidden;
     }
     .college-hero.magic-theme::before {
-      background: rgba(255, 255, 255, 0.06);
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 80%, rgba(201, 169, 97, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.15) 0%, transparent 40%);
+      pointer-events: none;
     }
     .college-hero.magic-theme::after {
-      background: rgba(244, 208, 63, 0.08);
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(2px 2px at 15% 30%, rgba(201, 169, 97, 0.4), transparent),
+        radial-gradient(1.5px 1.5px at 35% 70%, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(2px 2px at 55% 25%, rgba(201, 169, 97, 0.3), transparent),
+        radial-gradient(1px 1px at 75% 60%, rgba(255, 255, 255, 0.4), transparent),
+        radial-gradient(1.5px 1.5px at 90% 40%, rgba(201, 169, 97, 0.25), transparent),
+        radial-gradient(1px 1px at 25% 50%, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(2px 2px at 65% 85%, rgba(201, 169, 97, 0.3), transparent);
+      pointer-events: none;
+      animation: particleFloat 8s ease-in-out infinite;
+    }
+    @keyframes particleFloat {
+      0%, 100% { opacity: 0.6; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-8px); }
+    }
+    .college-hero.magic-theme .college-hero-en {
+      color: #C9A961;
+      letter-spacing: 3px;
     }
     .content-article h2.magic-section {
-      border-left-color: #8E44AD;
-      color: #4A235A;
+      border-left-color: #6C3483;
+      color: #2d1b4e;
+    }
+    .ethereon-card {
+      background: linear-gradient(135deg, #f8f5fc 0%, #efe8f7 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      margin: var(--space-8) 0;
+      border-left: 4px solid #6C3483;
+      position: relative;
+    }
+    .ethereon-card h3 {
+      color: #2d1b4e;
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-4);
+      font-family: var(--font-family-serif);
+    }
+    .ethereon-card p {
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+      margin-bottom: var(--space-3);
+    }
+    .ethereon-card .formula {
+      background: rgba(108, 52, 131, 0.08);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font-family: 'Courier New', monospace;
+      color: #4a2c7a;
+      font-size: var(--font-size-sm);
+      text-align: center;
+      margin: var(--space-4) 0;
+    }
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+      margin: var(--space-8) 0;
+    }
+    .research-item {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      transition: all var(--transition-normal);
+    }
+    .research-item:hover {
+      border-color: #6C3483;
+      box-shadow: 0 8px 24px rgba(108, 52, 131, 0.12);
+      transform: translateY(-2px);
+    }
+    .research-item h4 {
+      color: #2d1b4e;
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .research-item h4 .icon {
+      font-size: 24px;
+    }
+    .research-item p {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+      line-height: 1.7;
+    }
+    .timeline {
+      position: relative;
+      padding-left: var(--space-8);
+      margin: var(--space-8) 0;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, #6C3483, #C9A961);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: var(--space-6);
+    }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: calc(-1 * var(--space-8) - 4px);
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--color-white);
+      border: 3px solid #6C3483;
+    }
+    .timeline-item .year {
+      color: #C9A961;
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--space-1);
+    }
+    .timeline-item .event {
+      color: var(--color-text-primary);
+      font-size: var(--font-size-base);
+    }
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin: var(--space-8) 0;
+    }
+    .lab-card {
+      background: linear-gradient(135deg, #2d1b4e 0%, #4a2c7a 100%);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      color: var(--color-white);
+      transition: transform var(--transition-fast);
+    }
+    .lab-card:hover {
+      transform: translateY(-3px);
+    }
+    .lab-card h5 {
+      color: #C9A961;
+      font-size: var(--font-size-base);
+      margin-bottom: var(--space-2);
+    }
+    .lab-card p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: var(--font-size-xs);
+      line-height: 1.6;
+    }
+    .spell-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin: var(--space-6) 0 var(--space-10);
+    }
+    .spell-item {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+    .spell-item::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6C3483, #C9A961);
+    }
+    .spell-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(108, 52, 131, 0.15);
+      border-color: #6C3483;
+    }
+    .spell-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-2);
+    }
+    .spell-name {
+      font-family: 'Georgia', serif;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: #2d1b4e;
+      letter-spacing: 0.5px;
+    }
+    .spell-type {
+      font-size: var(--font-size-xs);
+      color: #C9A961;
+      background: rgba(201, 169, 97, 0.1);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: var(--font-weight-medium);
+    }
+    .spell-cn {
+      color: var(--color-primary-700);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      margin-bottom: var(--space-3);
+    }
+    .spell-desc {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <!-- 顶部信息栏 -->
-  <div class="top-bar">
-    <div class="top-bar-inner">
-      <div class="top-bar-links">
-        <a href="#">信息门户</a>
-        <a href="#">教务系统</a>
-        <a href="#">图书馆</a>
-        <a href="#">邮箱登录</a>
-      </div>
-      <div class="top-bar-actions">
-        <button class="lang-switch">English</button>
-      </div>
-    </div>
-  </div>
-
   <!-- 主导航栏 -->
   <header class="site-header">
     <div class="header-inner">
       <a href="../index.html" class="site-brand">
-        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" /></a>
+        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" decoding="async" width="7200" height="2048" /></a>
 
-      <nav class="main-nav">
+      <div class="header-right">
+        <div class="header-utility">
+          <div class="utility-links">
+            <a href="#">信息门户</a>
+            <a href="#">教务系统</a>
+            <a href="#">图书馆</a>
+            <a href="#">邮箱登录</a>
+          </div>
+          <div class="header-tools">
+            <button class="lang-switch">English</button>
+            <button class="search-btn" aria-label="搜索">&#128269;</button>
+          </div>
+        </div>
+
+        <nav class="main-nav">
         <div class="nav-item">
           <a href="../index.html">首页</a>
         </div>
@@ -71,14 +284,14 @@
             <li><a href="weilai.html">蔚莱科学技术学院</a></li>
             <li><a href="esports.html">电子竞技学院</a></li>
             <li><a href="art-media.html">艺术与传媒学院</a></li>
-            <li><a href="literature.html">文学院</a></li>
+            <li><a href="literature.html">汉语言文学学院</a></li>
             <li><a href="amy.html">艾米商学院</a></li>
-            <li><a href="philosophy-law.html">哲学与社会法学院</a></li>
+            <li><a href="philosophy-law.html">哲学与社会科学学院</a></li>
             <li><a href="siyuan.html">思源教育学院</a></li>
             <li><a href="lanyun.html">蓝云外国语学院</a></li>
             <li><a href="tianyu.html">田语学院</a></li>
             <li><a href="magic.html">魔法学院</a></li>
-            <li><a href="chuangxiang.html">创想蓝天学院</a></li>
+            <li><a href="chuangxiang.html">华田中央大学创想蓝天学院</a></li>
           </ul>
         </div>
         <div class="nav-item has-dropdown">
@@ -97,6 +310,7 @@
             <li><a href="../recruit/employment.html">就业服务</a></li>
           </ul>
         </div>
+        
         <div class="nav-item has-dropdown">
           <a href="../campus-culture/scenery.html">校园文化</a>
           <ul class="nav-dropdown">
@@ -113,16 +327,23 @@
             <li><a href="../service/academic.html">教务服务</a></li>
           </ul>
         </div>
-      </nav>
-
-      <div class="header-actions">
-        <button class="search-btn" aria-label="搜索">&#128269;</button>
-        <button class="mobile-menu-btn" aria-label="菜单">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <div class="nav-item has-dropdown">
+          <a href="../education-group/index.html">教育集团</a>
+          <ul class="nav-dropdown">
+            <li><a href="../education-group/index.html">集团概览</a></li>
+            <li><a href="../education-group/mingde-middle-school.html">附属明德中学</a></li>
+            <li><a href="../education-group/primary-school.html">附属小学</a></li>
+            <li><a href="../education-group/kindergarten.html">附属幼儿园</a></li>
+          </ul>
+        </div>
+        </nav>
       </div>
+
+      <button class="mobile-menu-btn" aria-label="菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
@@ -162,24 +383,24 @@
             <li><a href="weilai.html">蔚莱科学技术学院</a></li>
             <li><a href="esports.html">电子竞技学院</a></li>
             <li><a href="art-media.html">艺术与传媒学院</a></li>
-            <li><a href="literature.html">文学院</a></li>
+            <li><a href="literature.html">汉语言文学学院</a></li>
             <li><a href="amy.html">艾米商学院</a></li>
-            <li><a href="philosophy-law.html">哲学与社会法学院</a></li>
+            <li><a href="philosophy-law.html">哲学与社会科学学院</a></li>
             <li><a href="siyuan.html">思源教育学院</a></li>
             <li><a href="lanyun.html">蓝云外国语学院</a></li>
             <li><a href="tianyu.html">田语学院</a></li>
             <li><a href="magic.html" class="active">魔法学院</a></li>
-            <li><a href="chuangxiang.html">创想蓝天学院</a></li>
+            <li><a href="chuangxiang.html">华田中央大学创想蓝天学院</a></li>
           </ul>
         </aside>
 
         <!-- 右侧内容区 -->
         <article class="content-article">
-          <!-- 学院头部 - 紫色主题 -->
+          <!-- 学院头部 - 深紫金色主题 -->
           <div class="college-hero magic-theme">
             <div class="college-hero-content">
               <h1>魔法学院</h1>
-              <div class="college-hero-en">College of Magic</div>
+              <div class="college-hero-en">COLLEGE OF MAGIC · ETHEREON SCIENCE</div>
               <div class="college-hero-meta">
                 <div class="meta-item">
                   <span class="label">创办时间</span>
@@ -187,40 +408,289 @@
                 </div>
                 <div class="meta-item">
                   <span class="label">本科专业</span>
-                  <span class="value">3个</span>
+                  <span class="value">8个</span>
                 </div>
                 <div class="meta-item">
                   <span class="label">在校学生</span>
-                  <span class="value">180人</span>
+                  <span class="value">360人</span>
                 </div>
                 <div class="meta-item">
                   <span class="label">教职工</span>
-                  <span class="value">42人</span>
+                  <span class="value">76人</span>
                 </div>
               </div>
             </div>
           </div>
 
           <h2 class="magic-section">学院简介</h2>
-          <p>魔法学院成立于2023年，是全国首个魔法类专业学院。学院致力于探索魔法理论、元素应用、秘术研究等前沿交叉领域，培养具有创新思维和实践能力的魔法研究与应用人才。</p>
-          <p>学院采用精英化培养模式，每年招收60名本科生，竞争比例达10:1。学院秉持"探索未知、追求卓越"的院训，坚持高标准、严要求，致力于打造国内领先、国际知名的魔法研究与人才培养基地。</p>
+          <p>魔法学院（全称<strong>灵质科学与工程学院</strong>）成立于2023年，是琳凯蒂亚星球首家系统研究灵质粒子（Ethereon）的高等教研机构。学院以"解构魔法本质，重写物质规则"为使命，致力于从量子物理、材料科学、声学工程、古典语言学等多学科交叉角度，揭示灵质粒子的声波调控机制及其在物质构造中的应用原理。</p>
+          <p>学院依托华田中央大学深厚的理科积淀，与蔚莱科学技术学院共建灵质粒子加速器与物质构造实验平台。目前学院采用精英化培养模式，每年招收约90名本科生，入学需通过灵质亲和度检测与理论基础双重考核。学院建有星球首座灵质粒子实验室，在灵质杖工程、声波谱解析、微物质构造、灵质药剂、古典咒语学等方向处于星球领先水平。</p>
+
+          <div class="ethereon-card">
+            <h3>灵质粒子 Ethereon</h3>
+            <p>灵质粒子是一种存在于琳凯蒂亚星球远古生物（如上古晶鲸、岩脉巨龟等）大脑神经突触中的稀有量子相干粒子。该粒子在生物体内以玻色-爱因斯坦凝聚态存在，密度极低但相干距离可达数十厘米。</p>
+            <p>灵质粒子的核心特性是：<strong>特定频率的声波振动可触发其量子态坍缩路径选择</strong>，从而在局部范围内改变真空能量密度分布，等效于微调精细结构常数 α，进而改变化学键键能、分子排列乃至宏观物质的物理性质。这一过程严格遵循能量守恒与热力学第二定律——构造越复杂，所需灵质粒子密度与声波精度呈指数级增长。</p>
+            <div class="formula">Δα/α₀ ∝ Ψ(ω) · ρ_E · exp(-ΔE/kT)</div>
+            <p style="font-size: var(--font-size-sm); color: var(--color-text-tertiary); text-align: center; margin-top: -8px;">精细结构常数偏移量 ∝ 灵质波函数(频率) × 粒子密度 × 玻尔兹曼因子</p>
+          </div>
 
           <h2 class="magic-section">专业设置</h2>
-          <p>学院设有3个本科专业，涵盖魔法理论与应用、元素魔法、神秘学研究方向：</p>
+          <p>学院设有8个本科专业，覆盖灵质科学的理论、实验、工程、应用、人文等八大方向：</p>
+
+          <div class="research-grid">
+            <div class="research-item">
+              <h4><span class="icon">⚛</span> 灵质物理</h4>
+              <p>研究灵质粒子的量子相干机制、声波-粒子耦合理论、精细结构常数偏移模型。核心课程：量子场论、灵质场论、高等声学、非线性动力学、灵质波函数解析。</p>
+            </div>
+            <div class="research-item">
+              <h4><span class="icon">🔬</span> 物质构造工程</h4>
+              <p>研究利用灵质粒子进行分子级物质重组的工程方法，涵盖材料合成、精密制造、生物组织修复等方向。核心课程：材料科学基础、分子动力学、构造谱学、灵质催化原理。</p>
+            </div>
+            <div class="research-item">
+              <h4><span class="icon">🎵</span> 声波调控与灵质杖工程</h4>
+              <p>研究灵质粒子的存储介质（共鸣晶核）、共振合金杖身设计、声波频率精准调控技术。核心课程：声学工程、晶体物理、材料工程、灵质杖设计与调试。</p>
+            </div>
+            <div class="research-item">
+              <h4><span class="icon">🧬</span> 生物灵质学</h4>
+              <p>研究灵质粒子在生物体内的起源、神经-灵质耦合机制、远古生物灵质器官演化。核心课程：神经科学、演化生物学、生物物理、古灵质学。</p>
+            </div>
+            <div class="research-item">
+              <h4><span class="icon">⚗</span> 灵质药剂学</h4>
+              <p>研究溶有灵质粒子的特殊液体制剂——灵质药剂的配方、制备、存储与应用。涵盖医疗药剂、构造催化药剂、灵质增强药剂等方向。核心课程：灵质溶液化学、药剂炮制技术、药理构造学、药剂安全学。</p>
+            </div>
+            <div class="research-item">
+              <h4><span class="icon">📜</span> 古典咒语学</h4>
+              <p>研究古典琳凯蒂亚语的声波共振体系与咒语构词法，探索远古晶鲸声波转录的原初咒语。核心课程：古典琳凯蒂亚语、咒语声学分析、咒语史、高级咒语构词与创作。</p>
+            </div>
+            <div class="research-item">
+              <h4><span class="icon">🛡</span> 灵质防御与安全学</h4>
+              <p>研究灵质灾害的防护机制、安全操作规范、反构造技术与灵质安保工程。核心课程：灵质灾害学、防护构造原理、安全评估与管控、反灵质工程。</p>
+            </div>
+            <div class="research-item">
+              <h4><span class="icon">✦</span> 符文与构造阵列学</h4>
+              <p>研究灵质粒子在二维/三维阵列中的自组织现象，以及符文阵列对灵质场的聚焦与放大效应。核心课程：阵列拓扑学、符文共振原理、灵质场聚焦技术、大型构造阵工程。</p>
+            </div>
+          </div>
+
+          <h2 class="magic-section">研究方向与重大成果</h2>
+          <p>学院目前在六大前沿方向开展攻坚研究，多项成果发表于《灵质物理评论》《琳凯蒂亚材料学报》《古典咒语学年刊》等顶级期刊：</p>
           <ul>
-            <li><strong>魔法理论与应用</strong> — 培养系统掌握魔法基础理论和应用技能的魔法研究人才</li>
-            <li><strong>元素魔法</strong> — 培养掌握火、水、风、土等元素魔法理论与实践的专业人才</li>
-            <li><strong>神秘学研究</strong> — 培养从事神秘文化、秘术历史、魔法哲学研究的学术人才</li>
+            <li><strong>灵质粒子捕获与凝聚技术</strong> — 成功实现实验室条件下灵质粒子的体外稳定存储，凝聚时长突破72小时</li>
+            <li><strong>一阶构造谱标准库</strong> — 建立了覆盖1200种基础物质的声波频率-构造效果对应谱表，精度达98.7%</li>
+            <li><strong>第三代共鸣晶核</strong> — 研发出生物陶瓷基复合晶核，灵质存储密度提升4.3倍，使用寿命延长至15年</li>
+            <li><strong>微构造3D打印系统</strong> — 实现灵质辅助的分子级3D打印，分辨率达0.8纳米，远超传统光刻技术</li>
+            <li><strong>古典咒语构词法体系</strong> — 系统整理了24个基础词根与127条构词规则，可推导生成万种以上精准咒语</li>
+            <li><strong>灵质药剂标准化</strong> — 建立了36种基础灵质药剂的制备标准与质量检测体系，推动灵质医药产业化</li>
           </ul>
 
+          <h2 class="magic-section">古典琳凯蒂亚语与咒语体系</h2>
+          <p>咒语（Incantation）是古典琳凯蒂亚语中一组特殊的词汇体系，其发音频率与灵质粒子的本征振动频率产生精确共振，从而高效触发物质构造效应。咒语并非古人"发明"，而是从远古晶鲸的声呐脉冲中逐步转录、简化而来，其历史可追溯至星历前千年。</p>
+          <p>古典琳凯蒂亚语的每个词根都对应一组特定频率的声波组合。通过词根的拼接与变调，可以精确调控灵质粒子的坍缩路径，实现不同的构造效果。现代咒语学已建立起完整的构词法体系，高阶研究者可根据目标效果自行设计新咒语。</p>
+
+          <div class="ethereon-card">
+            <h3>古典琳凯蒂亚语词根体系（部分）</h3>
+            <p style="font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-bottom: var(--space-4);">以下为咒语构词中最常用的基础词根，所有词源均来自古典琳凯蒂亚语原生体系，与地球各语系无亲缘关系：</p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3) var(--space-6); font-size: var(--font-size-sm);">
+              <div><strong>eth-</strong> 灵质、本质、存在</div>
+              <div><strong>vyr-</strong> 形式、形状、构造</div>
+              <div><strong>kael-</strong> 光、热、火</div>
+              <div><strong>zor-</strong> 静止、凝固、停止</div>
+              <div><strong>vath-</strong> 流动、液体</div>
+              <div><strong>ael-</strong> 保护、守护</div>
+              <div><strong>indar</strong> 边界、界限</div>
+              <div><strong>morv-</strong> 影子、暗、隐匿</div>
+              <div><strong>ynil</strong> 覆盖、包裹</div>
+              <div><strong>syth-</strong> 感知、觉察</div>
+              <div><strong>ara</strong> 灵质、精神、气</div>
+              <div><strong>lyth-</strong> 生命、活力</div>
+              <div><strong>andar</strong> 修复、重聚</div>
+              <div><strong>mire-</strong> 平静、安宁</div>
+              <div><strong>vor-</strong> 上升、悬浮</div>
+              <div><strong>athil</strong> 轻盈、无重</div>
+              <div><strong>myr-</strong> 改变、转化</div>
+              <div><strong>phos</strong> 形态、外貌</div>
+              <div><strong>val-</strong> 力量、强度</div>
+              <div><strong>dras-</strong> 生长、扩展</div>
+              <div><strong>orin</strong> 根源、本源</div>
+              <div><strong>thal-</strong> 远、遥远</div>
+              <div><strong>kyth-</strong> 混乱、破坏</div>
+              <div><strong>run-</strong> 符文、刻印</div>
+            </div>
+          </div>
+
+          <h3 style="color: #2d1b4e; font-family: var(--font-family-serif); margin: var(--space-10) 0 var(--space-6); font-size: var(--font-size-xl);">基础咒语一览</h3>
+          <div class="spell-grid">
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Vyrthara</span>
+                <span class="spell-type">构造系</span>
+              </div>
+              <div class="spell-cn">塑形术</div>
+              <div class="spell-desc"><strong>词源：</strong>vyr（形式）+ thara（赋予）<br/><strong>效果：</strong>赋予无定形物质以特定形状，是最基础的构造类咒语</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Kaelmoth</span>
+                <span class="spell-type">元素系</span>
+              </div>
+              <div class="spell-cn">炽光术</div>
+              <div class="spell-desc"><strong>词源：</strong>kael（光热）+ moth（诞生）<br/><strong>效果：</strong>在局部空间激发出光与热，可调节强度从微光照明至高温熔融</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Zorvath</span>
+                <span class="spell-type">元素系</span>
+              </div>
+              <div class="spell-cn">凝止术</div>
+              <div class="spell-desc"><strong>词源：</strong>zor（静止）+ vath（流动）<br/><strong>效果：</strong>使流动的物质趋于静止凝固，可用于冻结液体、减缓气流</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Aelindar</span>
+                <span class="spell-type">防护系</span>
+              </div>
+              <div class="spell-cn">灵盾术</div>
+              <div class="spell-desc"><strong>词源：</strong>ael（保护）+ indar（边界）<br/><strong>效果：</strong>在指定边界处凝聚灵质防护层，可抵御物理冲击与低阶灵质攻击</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Morvynil</span>
+                <span class="spell-type">隐匿系</span>
+              </div>
+              <div class="spell-cn">影匿术</div>
+              <div class="spell-desc"><strong>词源：</strong>morv（影子）+ ynil（覆盖）<br/><strong>效果：</strong>以灵质偏折光线，使目标被阴影覆盖而难以被光学手段察觉</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Lythandar</span>
+                <span class="spell-type">治愈系</span>
+              </div>
+              <div class="spell-cn">愈合力</div>
+              <div class="spell-desc"><strong>词源：</strong>lyth（生命）+ andar（修复）<br/><strong>效果：</strong>加速生物组织的修复与再生，可处理外伤与部分内部损伤</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Sythara</span>
+                <span class="spell-type">感知系</span>
+              </div>
+              <div class="spell-cn">灵息术</div>
+              <div class="spell-desc"><strong>词源：</strong>syth（感知）+ ara（灵质）<br/><strong>效果：</strong>扩展施法者的灵质感知范围，探测周围灵质粒子分布与异常</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Vorathil</span>
+                <span class="spell-type">移动系</span>
+              </div>
+              <div class="spell-cn">浮空术</div>
+              <div class="spell-desc"><strong>词源：</strong>vor（上升）+ athil（轻盈）<br/><strong>效果：</strong>抵消目标部分重力，使其悬浮或缓慢移动</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Myrphos</span>
+                <span class="spell-type">变化系</span>
+              </div>
+              <div class="spell-cn">幻形术</div>
+              <div class="spell-desc"><strong>词源：</strong>myr（改变）+ phos（形态）<br/><strong>效果：</strong>通过灵质场扭曲光线，改变目标的外貌形态（仅光学层面）</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Drasorin</span>
+                <span class="spell-type">构造系</span>
+              </div>
+              <div class="spell-cn">催生术</div>
+              <div class="spell-desc"><strong>词源：</strong>dras（生长）+ orin（根源）<br/><strong>效果：</strong>激发植物或生物组织的本源生长力，实现快速生长与修复</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Thalyris</span>
+                <span class="spell-type">感知系</span>
+              </div>
+              <div class="spell-cn">远视术</div>
+              <div class="spell-desc"><strong>词源：</strong>thal（远）+ yris（视觉）<br/><strong>效果：</strong>通过灵质场折射远处光线，实现超远距离视觉感知</div>
+            </div>
+            <div class="spell-item">
+              <div class="spell-header">
+                <span class="spell-name">Valeth</span>
+                <span class="spell-type">强化系</span>
+              </div>
+              <div class="spell-cn">聚力术</div>
+              <div class="spell-desc"><strong>词源：</strong>val（力量）+ eth（灵质）<br/><strong>效果：</strong>集中灵质粒子增强单次构造效果，提升施法强度与作用范围</div>
+            </div>
+          </div>
+
+          <h2 class="magic-section">学科发展历程</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="year">星历187年</div>
+              <div class="event">琳凯蒂亚古生物学家在晶鲸化石神经组织中发现异常量子相干信号，灵质粒子假说首次提出</div>
+            </div>
+            <div class="timeline-item">
+              <div class="year">星历215年</div>
+              <div class="event">蔚莱科学院成功分离出灵质粒子，验证了声波频率-物质构造效应的定量关系</div>
+            </div>
+            <div class="timeline-item">
+              <div class="year">星历229年</div>
+              <div class="event">第一根人工灵质杖原型机诞生，实现了厘米级铁铜转换实验，开启灵质工程时代</div>
+            </div>
+            <div class="timeline-item">
+              <div class="year">星历241年（2023）</div>
+              <div class="event">华田中央大学魔法学院成立，成为星球首家灵质科学高等教育与科研机构</div>
+            </div>
+            <div class="timeline-item">
+              <div class="year">星历243年（2025）</div>
+              <div class="event">学院建成灵质粒子加速器与物质构造实验中心，三阶构造实验成功率突破60%</div>
+            </div>
+          </div>
+
+          <h2 class="magic-section">科研平台</h2>
+          <p>学院拥有8个校级以上重点实验室，实验设备总值超5.6亿星币，为灵质科学研究提供坚实支撑：</p>
+          <div class="lab-grid">
+            <div class="lab-card">
+              <h5>灵质粒子物理实验室</h5>
+              <p>灵质谱仪、相干态测量装置、粒子捕获阱</p>
+            </div>
+            <div class="lab-card">
+              <h5>物质构造实验中心</h5>
+              <p>分子级构造舱、纳米精度观测系统、谱数据库</p>
+            </div>
+            <div class="lab-card">
+              <h5>灵质杖工程实验室</h5>
+              <p>晶核培养室、合金共振测试台、声波校准系统</p>
+            </div>
+            <div class="lab-card">
+              <h5>声波调控研究室</h5>
+              <p>全消声实验室、精密声谱仪、声场模拟平台</p>
+            </div>
+            <div class="lab-card">
+              <h5>生物灵质研究所</h5>
+              <p>古生物化石样本库、神经-灵质耦合观测仪</p>
+            </div>
+            <div class="lab-card">
+              <h5>构造材料研发中心</h5>
+              <p>新型灵质复合材料研发、工业级构造应用</p>
+            </div>
+            <div class="lab-card">
+              <h5>灵质药剂实验室</h5>
+              <p>无菌炮制室、灵质溶液分析仪、药剂稳定性试验台</p>
+            </div>
+            <div class="lab-card">
+              <h5>古典咒语学研究所</h5>
+              <p>古文献档案馆、咒语声纹库、晶鲸声波转录研究室</p>
+            </div>
+            <div class="lab-card">
+              <h5>符文阵列实验室</h5>
+              <p>高精度刻印台、阵列共振测试舱、大型构造阵模拟系统</p>
+            </div>
+          </div>
+
           <h2 class="magic-section">师资力量</h2>
-          <p>学院现有教职工42人，其中教授6人，副教授12人。汇聚了国内外顶尖的魔法研究学者，包括多位国际魔法协会认证的高级魔法师。</p>
-          <p>学院师资队伍具有国际化背景，教师来自多个国家和地区，拥有丰富的魔法研究与教学经验。学院还聘请了多位国际知名魔法大师担任荣誉教授和客座研究员，定期来院讲学指导。</p>
+          <p>学院现有教职工76人，其中教授18人，副教授26人。师资队伍涵盖量子物理、材料科学、声学工程、古生物学、古典语言学、药剂学等多个学科背景，形成了交叉融合的研究团队。</p>
+          <p>学院聘请了9位国际灵质物理协会（IEPA）会士担任客座教授，与蔚莱科学院、东洲灵质研究院、晶鲸古文献研究所等机构建立了长期合作关系。学生可参与国家级灵质科研项目，在本科阶段即可进入实验室开展前沿研究。</p>
 
           <h2 class="magic-section">办学特色</h2>
-          <p><strong>国内首创专业：</strong>学院建有国内首座魔法实验楼，配备先进的魔法研究设备。与国际多所魔法研究机构建立合作关系。学院是全国首个开设魔法类本科专业的学院，在魔法教育领域具有开创性意义。</p>
-          <p><strong>精英导师制培养：</strong>学院实行导师制，每位学生配有专属导师。采用小班化教学，师生比达1:4.3。注重学生个性化发展，因材施教，充分发掘每位学生的魔法潜能。首届学生已在国际魔法研究期刊发表多篇论文。</p>
-          <p><strong>国际交流合作：</strong>学院与国际魔法协会、欧洲魔法研究院等国际知名机构建立了合作关系，开展学生交换、联合研究等多种形式的交流合作。学生有机会赴海外魔法学院进行短期访学和联合培养。</p>
+          <p><strong>硬核科学体系：</strong>摒弃传统"神秘学"叙事，建立以量子物理、声学、材料科学为基础的完整灵质学科体系。所有实验均可重复验证，所有理论均有数学模型支撑。学院开创了"魔法即物理"的全新学科范式。</p>
+          <p><strong>精英导师制培养：</strong>实行一对一导师制，师生比达1:4.1。每位学生从大一下学期进入实验室，参与真实科研项目。核心课程采用小班研讨式教学，注重实验操作能力与理论推导能力的双重培养。</p>
+          <p><strong>灵质杖实践教学：</strong>学院为每位学生配备定制化训练用灵质杖，从基础频率校准到一阶物质构造，循序渐进。大四学年需独立完成三阶构造毕业设计，通过灵质安全与构造精度双重考核方可毕业。</p>
         </article>
       </div>
     </div>
@@ -231,7 +701,7 @@
     <div class="container">
       <div class="footer-main">
         <div class="footer-brand">
-          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" />
+          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" loading="lazy" decoding="async" width="7200" height="2048" />
           <div>
             <h3>华田中央大学</h3>
             <div class="footer-brand-en">Rincatia Central University</div>
@@ -239,7 +709,6 @@
           <p>立德树人 · 追求卓越 · 传承文明 · 开创未来<br/>
              追梦深蓝，启航未来</p>
         </div>
-
         <div class="footer-links">
           <div class="footer-link-group">
             <h4>学校概况</h4>
@@ -253,10 +722,10 @@
           <div class="footer-link-group">
             <h4>院系设置</h4>
             <ul>
-              <li><a href="li.html">理学院</a></li>
-              <li><a href="weilai.html">蔚莱科技学院</a></li>
-              <li><a href="tianyu.html">田语学院</a></li>
-              <li><a href="magic.html">魔法学院</a></li>
+              <li><a href="../college/index.html">全部院系</a></li>
+              <li><a href="../college/li.html">理学院</a></li>
+              <li><a href="../college/weilai.html">蔚莱科技学院</a></li>
+              <li><a href="../college/magic.html">魔法学院</a></li>
             </ul>
           </div>
           <div class="footer-link-group">
@@ -277,26 +746,26 @@
               <li><a href="../campus-culture/scenery.html">校园风光</a></li>
             </ul>
           </div>
+          <div class="footer-link-group footer-contact-group">
+            <h4>联系我们</h4>
+            <ul class="contact-link-list">
+              <li><span class="icon">&#128205;</span> 华田市丽野区青枣大道1号</li>
+              <li><span class="icon">&#9742;</span> 招生：0123-4567890</li>
+              <li><span class="icon">&#9742;</span> 校办：0123-4567888</li>
+              <li><span class="icon">&#9993;</span> info@rcu.edu.rincatia.com</li>
+            </ul>
+          </div>
         </div>
-
-        <div class="footer-contact">
-          <h4>联系我们</h4>
-          <div class="footer-contact-item">
-            <span class="icon">&#128205;</span>
-            <span>华田市中央区大学路1号<br/>华田中央大学</span>
-          </div>
-          <div class="footer-contact-item">
-            <span class="icon">&#9742;</span>
-            <span>招生咨询：0123-4567890<br/>
-                  校办电话：0123-4567888</span>
-          </div>
-          <div class="footer-contact-item">
-            <span class="icon">&#9993;</span>
-            <span>info@rincatia-uni.edu.cn</span>
-          </div>
+        <div class="footer-contact footer-edu-group">
+          <h4>教育集团</h4>
+          <ul class="footer-edu-links">
+            <li><a href="../education-group/index.html">集团概览</a></li>
+            <li><a href="../education-group/mingde-middle-school.html">附属明德中学</a></li>
+            <li><a href="../education-group/primary-school.html">附属小学</a></li>
+            <li><a href="../education-group/kindergarten.html">附属幼儿园</a></li>
+          </ul>
         </div>
       </div>
-
       <div class="footer-bottom">
         <div class="footer-bottom-links">
           <a href="#">隐私政策</a>
@@ -304,8 +773,8 @@
           <a href="#">网站地图</a>
           <a href="#">旧版网站</a>
         </div>
-        <p>&copy; 2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
-           京ICP备XXXXXXXX号 · 京公网安备XXXXXXXXXXXX号</p>
+        <p>&copy; 2017-2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
+           皖ICP备2025090921号-3</p>
       </div>
     </div>
   </footer>

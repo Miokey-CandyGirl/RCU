@@ -14,6 +14,7 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -25,6 +26,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 /* ---------- 排版 ---------- */
@@ -34,6 +36,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-primary-800);
   line-height: var(--line-height-tight);
   letter-spacing: -0.01em;
+  overflow-wrap: break-word;
 }
 
 h1 {
@@ -69,6 +72,7 @@ h6 {
 p {
   margin-bottom: var(--space-4);
   color: var(--color-text-secondary);
+  overflow-wrap: break-word;
 }
 
 /* ---------- 链接 ---------- */
@@ -76,10 +80,16 @@ a {
   color: var(--color-primary-600);
   text-decoration: none;
   transition: color var(--transition-fast);
+  overflow-wrap: break-word;
 }
 
 a:hover {
   color: var(--color-gold-500);
+}
+
+/* 移动端去掉链接/按钮点击高亮闪烁 */
+a, button, input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ---------- 图片 ---------- */
@@ -112,10 +122,22 @@ th {
   color: var(--color-primary-700);
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
+  white-space: nowrap;
 }
 
 tr:hover td {
   background-color: var(--color-gray-50);
+}
+
+/* 响应式表格：小屏横向滚动而非撑破布局 */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive table {
+  margin: var(--space-4) 0;
 }
 
 /* ---------- 选中文本 ---------- */
@@ -259,16 +281,18 @@ tr:hover td {
   margin-right: 0;
 }
 
-/* ---------- 栅格系统 ---------- */
+/* ---------- 栅格系统（移动优先：默认单列，按断点递增） ---------- */
 .grid {
   display: grid;
   gap: var(--space-6);
 }
 
-.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
-.grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
+.grid-cols-2,
+.grid-cols-3,
+.grid-cols-4,
+.grid-cols-6 {
+  grid-template-columns: 1fr;
+}
 
 .flex { display: flex; }
 .flex-col { flex-direction: column; }
@@ -280,12 +304,58 @@ tr:hover td {
 .gap-6 { gap: var(--space-6); }
 .gap-8 { gap: var(--space-8); }
 
-/* ---------- 响应式 ---------- */
-@media (max-width: 1024px) {
-  .grid-cols-4 { grid-template-columns: repeat(3, 1fr); }
-  .grid-cols-6 { grid-template-columns: repeat(4, 1fr); }
+/* 小屏并排显示紧凑项（两列对 320-639px 更友好） */
+@media (min-width: 480px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
+@media (min-width: 640px) {
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-cols-6 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .grid-cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* ---------- 响应式 ---------- */
+
+/* 大屏（1920px+）：整体按比例放大，充分利用宽屏空间 */
+@media (min-width: 1920px) {
+  html {
+    font-size: 17.5px;
+  }
+
+  .container {
+    padding: 0 var(--space-10);
+  }
+}
+
+/* 平板横屏及以下：压缩区块留白 */
+@media (max-width: 1024px) {
+  .py-20 { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+  .py-24 { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+}
+
+/* 手机：进一步收紧留白与标题层级 */
 @media (max-width: 768px) {
   h1 { font-size: var(--font-size-4xl); }
   h2 { font-size: var(--font-size-3xl); }
@@ -295,18 +365,39 @@ tr:hover td {
     font-size: var(--font-size-3xl);
   }
 
+  .section-header .section-eyebrow {
+    letter-spacing: 2px;
+  }
+
   .container {
     padding: 0 var(--space-4);
   }
 
-  .grid-cols-3,
-  .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
-  .grid-cols-6 { grid-template-columns: repeat(3, 1fr); }
+  .py-8 { padding-top: var(--space-6); padding-bottom: var(--space-6); }
+  .py-12 { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+  .py-16 { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+  .py-20 { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+  .py-24 { padding-top: var(--space-12); padding-bottom: var(--space-12); }
 }
 
+/* 小屏手机（320-480px） */
 @media (max-width: 480px) {
-  .grid-cols-2,
-  .grid-cols-3,
-  .grid-cols-4,
-  .grid-cols-6 { grid-template-columns: 1fr; }
+  .section-header .section-subtitle {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* ---------- 无障碍：用户偏好减少动效 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

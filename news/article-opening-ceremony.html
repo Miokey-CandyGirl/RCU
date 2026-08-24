@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -17,7 +17,8 @@
     }
     .article-meta {
       display: flex;
-      gap: var(--space-6);
+      flex-wrap: wrap;
+      gap: var(--space-3) var(--space-6);
       color: var(--color-text-tertiary);
       font-size: var(--font-size-sm);
       margin-bottom: var(--space-8);
@@ -59,7 +60,7 @@
       text-indent: 0;
     }
     .article-body blockquote {
-      border-left: 4px solid var(--color-accent-gold);
+      border-left: 4px solid var(--color-gold-500);
       padding: var(--space-4) var(--space-6);
       margin: var(--space-8) 0;
       background: var(--color-bg-secondary);
@@ -100,31 +101,46 @@
       font-size: var(--font-size-sm);
       color: var(--color-text-secondary);
     }
+
+    @media (max-width: 768px) {
+      .article-container {
+        padding: var(--space-8) var(--space-4);
+      }
+      .article-body {
+        line-height: 1.85;
+      }
+      .article-body h2 {
+        margin: var(--space-8) 0 var(--space-5) 0;
+      }
+      .article-tags {
+        margin-top: var(--space-8);
+        padding-top: var(--space-6);
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- 顶部信息栏 -->
-  <div class="top-bar">
-    <div class="top-bar-inner">
-      <div class="top-bar-links">
-        <a href="#">信息门户</a>
-        <a href="#">教务系统</a>
-        <a href="#">图书馆</a>
-        <a href="#">邮箱登录</a>
-      </div>
-      <div class="top-bar-actions">
-        <button class="lang-switch">English</button>
-      </div>
-    </div>
-  </div>
-
   <!-- 主导航栏 -->
   <header class="site-header">
     <div class="header-inner">
       <a href="../index.html" class="site-brand">
-        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" /></a>
+        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" decoding="async" width="7200" height="2048" /></a>
 
-      <nav class="main-nav">
+      <div class="header-right">
+        <div class="header-utility">
+          <div class="utility-links">
+            <a href="#">信息门户</a>
+            <a href="#">教务系统</a>
+            <a href="#">图书馆</a>
+            <a href="#">邮箱登录</a>
+          </div>
+          <div class="header-tools">
+            <button class="lang-switch">English</button>
+            <button class="search-btn" aria-label="搜索">&#128269;</button>
+          </div>
+        </div>
+
+        <nav class="main-nav">
         <div class="nav-item">
           <a href="../index.html">首页</a>
         </div>
@@ -144,14 +160,14 @@
             <li><a href="../college/weilai.html">蔚莱科学技术学院</a></li>
             <li><a href="../college/esports.html">电子竞技学院</a></li>
             <li><a href="../college/art-media.html">艺术与传媒学院</a></li>
-            <li><a href="../college/literature.html">文学院</a></li>
+            <li><a href="../college/literature.html">汉语言文学学院</a></li>
             <li><a href="../college/amy.html">艾米商学院</a></li>
-            <li><a href="../college/philosophy-law.html">哲学与社会法学院</a></li>
+            <li><a href="../college/philosophy-law.html">哲学与社会科学学院</a></li>
             <li><a href="../college/siyuan.html">思源教育学院</a></li>
             <li><a href="../college/lanyun.html">蓝云外国语学院</a></li>
             <li><a href="../college/tianyu.html">田语学院</a></li>
             <li><a href="../college/magic.html">魔法学院</a></li>
-            <li><a href="../college/chuangxiang.html">创想蓝天学院</a></li>
+            <li><a href="../college/chuangxiang.html">华田中央大学创想蓝天学院</a></li>
           </ul>
         </div>
         <div class="nav-item has-dropdown active">
@@ -170,6 +186,7 @@
             <li><a href="../recruit/employment.html">就业服务</a></li>
           </ul>
         </div>
+        
         <div class="nav-item has-dropdown">
           <a href="../campus-culture/scenery.html">校园文化</a>
           <ul class="nav-dropdown">
@@ -186,16 +203,23 @@
             <li><a href="../service/academic.html">教务服务</a></li>
           </ul>
         </div>
-      </nav>
-
-      <div class="header-actions">
-        <button class="search-btn" aria-label="搜索">&#128269;</button>
-        <button class="mobile-menu-btn" aria-label="菜单">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <div class="nav-item has-dropdown">
+          <a href="../education-group/index.html">教育集团</a>
+          <ul class="nav-dropdown">
+            <li><a href="../education-group/index.html">集团概览</a></li>
+            <li><a href="../education-group/mingde-middle-school.html">附属明德中学</a></li>
+            <li><a href="../education-group/primary-school.html">附属小学</a></li>
+            <li><a href="../education-group/kindergarten.html">附属幼儿园</a></li>
+          </ul>
+        </div>
+        </nav>
       </div>
+
+      <button class="mobile-menu-btn" aria-label="菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
@@ -226,7 +250,7 @@
       </div>
 
       <div class="article-cover">
-        <img src="../assets/images/campus-conference.jpg" alt="2026级新生开学典礼现场" />
+        <img src="../assets/images/campus-conference.jpg" loading="lazy" decoding="async" width="2560" height="1440" alt="2026级新生开学典礼现场" />
         <div class="article-cover-caption">华田中央大学2026级新生开学典礼在大礼堂隆重举行</div>
       </div>
 
@@ -247,7 +271,7 @@
         <p>陈远航校长对全体新生提出三点希望：一是要坚定理想信念，做有担当的新时代青年；二是要勤奋学习钻研，做有本领的新时代青年；三是要勇于创新实践，做有作为的新时代青年。他勉励同学们珍惜大学时光，在华田中央大学这片追梦的沃土上，增长才干、锤炼品格、成就梦想。</p>
 
         <div class="article-img">
-          <img src="../assets/images/campus-registration.jpg" alt="新生报到现场" />
+          <img src="../assets/images/campus-registration.jpg" loading="lazy" decoding="async" width="2848" height="1600" alt="新生报到现场" />
           <div class="article-img-caption">2026级新生报到现场 · 6000名新学子相聚华田</div>
         </div>
 
@@ -278,7 +302,7 @@
     <div class="container">
       <div class="footer-main">
         <div class="footer-brand">
-          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" />
+          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" loading="lazy" decoding="async" width="7200" height="2048" />
           <div>
             <h3>华田中央大学</h3>
             <div class="footer-brand-en">Rincatia Central University</div>
@@ -286,7 +310,6 @@
           <p>立德树人 · 追求卓越 · 传承文明 · 开创未来<br/>
              追梦深蓝，启航未来</p>
         </div>
-
         <div class="footer-links">
           <div class="footer-link-group">
             <h4>学校概况</h4>
@@ -301,9 +324,9 @@
             <h4>院系设置</h4>
             <ul>
               <li><a href="../college/index.html">全部院系</a></li>
-              <li><a href="../college/tianyu.html">田语学院</a></li>
+              <li><a href="../college/li.html">理学院</a></li>
+              <li><a href="../college/weilai.html">蔚莱科技学院</a></li>
               <li><a href="../college/magic.html">魔法学院</a></li>
-              <li><a href="../college/esports.html">电子竞技学院</a></li>
             </ul>
           </div>
           <div class="footer-link-group">
@@ -312,7 +335,7 @@
               <li><a href="../recruit/undergraduate.html">本科招生</a></li>
               <li><a href="../recruit/graduate.html">研究生招生</a></li>
               <li><a href="../recruit/employment.html">就业服务</a></li>
-              <li><a href="../recruit/undergraduate.html">报考指南</a></li>
+              <li><a href="../recruit/employment.html">校友之家</a></li>
             </ul>
           </div>
           <div class="footer-link-group">
@@ -324,15 +347,35 @@
               <li><a href="../campus-culture/scenery.html">校园风光</a></li>
             </ul>
           </div>
+          <div class="footer-link-group footer-contact-group">
+            <h4>联系我们</h4>
+            <ul class="contact-link-list">
+              <li><span class="icon">&#128205;</span> 华田市丽野区青枣大道1号</li>
+              <li><span class="icon">&#9742;</span> 招生：0123-4567890</li>
+              <li><span class="icon">&#9742;</span> 校办：0123-4567888</li>
+              <li><span class="icon">&#9993;</span> info@rcu.edu.rincatia.com</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-contact footer-edu-group">
+          <h4>教育集团</h4>
+          <ul class="footer-edu-links">
+            <li><a href="../education-group/index.html">集团概览</a></li>
+            <li><a href="../education-group/mingde-middle-school.html">附属明德中学</a></li>
+            <li><a href="../education-group/primary-school.html">附属小学</a></li>
+            <li><a href="../education-group/kindergarten.html">附属幼儿园</a></li>
+          </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="footer-copyright">
-          © 2026 华田中央大学 版权所有 · 京ICP备XXXXXXXX号
+        <div class="footer-bottom-links">
+          <a href="#">隐私政策</a>
+          <a href="#">使用条款</a>
+          <a href="#">网站地图</a>
+          <a href="#">旧版网站</a>
         </div>
-        <div class="footer-contact">
-          地址：华田市中央区大学路1号 · 邮编：100000 · 电话：010-88888888
-        </div>
+        <p>&copy; 2017-2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
+           皖ICP备2025090921号-3</p>
       </div>
     </div>
   </footer>

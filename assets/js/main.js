@@ -2,6 +2,9 @@
    华田中央大学 - 主脚本 Main JS
    ============================================ */
 
+// 移动端断点（与 CSS 媒体查询保持一致）
+var MOBILE_BREAKPOINT = window.matchMedia('(max-width: 1024px)');
+
 document.addEventListener('DOMContentLoaded', function() {
   initHeader();
   initMobileMenu();
@@ -10,58 +13,131 @@ document.addEventListener('DOMContentLoaded', function() {
   initStatsCounter();
 });
 
-// 头部滚动效果
+// 头部滚动效果（passive 提升滚动性能）
 function initHeader() {
   const header = document.querySelector('.site-header');
   if (!header) return;
 
-  let lastScroll = 0;
-
   window.addEventListener('scroll', function() {
-    const currentScroll = window.pageYOffset;
-
-    if (currentScroll > 50) {
+    if (window.pageYOffset > 50) {
       header.classList.add('scrolled');
     } else {
       header.classList.remove('scrolled');
     }
-
-    lastScroll = currentScroll;
-  });
+  }, { passive: true });
 }
 
-// 移动端菜单
+// 移动端菜单（抽屉式：遮罩 + 滚动锁定 + 可访问性）
 function initMobileMenu() {
   const menuBtn = document.querySelector('.mobile-menu-btn');
   const mainNav = document.querySelector('.main-nav');
   if (!menuBtn || !mainNav) return;
 
-  menuBtn.addEventListener('click', function() {
-    mainNav.classList.toggle('open');
+  // 动态创建遮罩（避免修改所有页面结构）
+  const overlay = document.createElement('div');
+  overlay.className = 'nav-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(overlay);
+
+  function isMobile() {
+    return MOBILE_BREAKPOINT.matches;
+  }
+
+  function openMenu() {
+    mainNav.classList.add('open');
+    menuBtn.classList.add('active');
+    overlay.classList.add('show');
+    document.body.classList.add('nav-open');
+    menuBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    mainNav.classList.remove('open');
+    menuBtn.classList.remove('active');
+    overlay.classList.remove('show');
+    document.body.classList.remove('nav-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggleMenu() {
+    if (mainNav.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  }
+
+  menuBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleMenu();
   });
 
-  // 处理移动端下拉菜单
+  // 点击遮罩关闭
+  overlay.addEventListener('click', closeMenu);
+
+  // ESC 键关闭
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mainNav.classList.contains('open')) {
+      closeMenu();
+      menuBtn.focus();
+    }
+  });
+
+  // 处理移动端下拉菜单（点击父级展开/收起）
   const navItems = document.querySelectorAll('.nav-item.has-dropdown');
   navItems.forEach(item => {
     const link = item.querySelector(':scope > a');
     if (link) {
+      link.setAttribute('aria-haspopup', 'true');
+      link.setAttribute('aria-expanded', 'false');
+
       link.addEventListener('click', function(e) {
-        if (window.innerWidth <= 1024) {
+        if (isMobile()) {
           e.preventDefault();
-          item.classList.toggle('open');
+          const expanded = item.classList.toggle('open');
+          link.setAttribute('aria-expanded', String(expanded));
         }
       });
     }
   });
 
-  // 点击外部关闭菜单
+  // 点击普通导航链接后关闭菜单
+  mainNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function() {
+      if (isMobile() && !link.closest('.has-dropdown')) {
+        closeMenu();
+      }
+    });
+  });
+
+  // 点击菜单外部关闭（兜底，遮罩已覆盖大部分场景）
   document.addEventListener('click', function(e) {
-    if (window.innerWidth <= 1024 &&
+    if (isMobile() &&
+        mainNav.classList.contains('open') &&
         !mainNav.contains(e.target) &&
         !menuBtn.contains(e.target)) {
-      mainNav.classList.remove('open');
+      closeMenu();
     }
   });
+
+  // 跨断点切换：从移动端调整到桌面端时重置菜单状态
+  function handleBreakpointChange(e) {
+    if (!e.matches) {
+      closeMenu();
+      navItems.forEach(item => {
+        item.classList.remove('open');
+        const link = item.querySelector(':scope > a');
+        if (link) link.setAttribute('aria-expanded', 'false');
+      });
+    }
+  }
+
+  if (typeof MOBILE_BREAKPOINT.addEventListener === 'function') {
+    MOBILE_BREAKPOINT.addEventListener('change', handleBreakpointChange);
+  } else if (typeof MOBILE_BREAKPOINT.addListener === 'function') {
+    // 旧版 Safari 兼容
+    MOBILE_BREAKPOINT.addListener(handleBreakpointChange);
+  }
 }
 
 // Hero 轮播
@@ -141,11 +217,13 @@ function initHeroCarousel() {
   }
 }
 
-// 滚动动画
+// 滚动动画（尊重系统"减少动效"偏好）
 function initScrollAnimations() {
   const animateElements = document.querySelectorAll('.feature-card, .college-card, .news-card, .gallery-item, .stat-item');
 
-  if (!('IntersectionObserver' in window)) {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion || !('IntersectionObserver' in window)) {
     animateElements.forEach(el => {
       el.style.opacity = '1';
       el.style.transform = 'none';

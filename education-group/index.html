@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>教育集团 - 华田中央大学</title>
+  <meta name="description" content="华田中央大学教育集团涵盖附属中学、附属小学、附属幼儿园，构建K12一体化基础教育体系。" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <style>
+    .page-hero-content p {
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .group-overview {
+      padding: var(--space-20) var(--space-6);
+      background: var(--color-bg-primary);
+    }
+    .group-overview-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+    .section-title h2 {
+      font-size: var(--font-size-3xl);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-4);
+    }
+    .section-title p {
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-base);
+    }
+    .schools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+    }
+    .school-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .school-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .school-card-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .school-card-body {
+      padding: var(--space-6);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .school-card-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--color-primary-50);
+      color: var(--color-primary-700);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-3);
+      align-self: flex-start;
+    }
+    .school-card-badge.public {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .school-card-badge.private {
+      background: #fff3e0;
+      color: #e65100;
+    }
+    .school-card-title {
+      font-size: var(--font-size-xl);
+      color: var(--color-text-primary);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+    .school-card-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--space-5);
+      flex: 1;
+    }
+    .school-card-meta {
+      display: flex;
+      gap: var(--space-6);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-border);
+    }
+    .school-card-meta-item {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-tertiary);
+    }
+    .school-card-meta-item strong {
+      color: var(--color-text-primary);
+      display: block;
+      font-size: var(--font-size-base);
+      margin-bottom: 2px;
+    }
+    .stats-section {
+      padding: var(--space-20) var(--space-6);
+      background: var(--color-bg-secondary);
+    }
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-8);
+      text-align: center;
+    }
+    .stat-item-number {
+      font-size: var(--font-size-4xl);
+      font-weight: 700;
+      color: var(--color-primary-700);
+      line-height: 1;
+      margin-bottom: var(--space-3);
+    }
+    .stat-item-number .unit {
+      font-size: var(--font-size-xl);
+      color: var(--color-accent-gold);
+      margin-left: 4px;
+    }
+    .stat-item-label {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+    }
+    @media (max-width: 960px) {
+      .schools-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <!-- 主导航栏 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="site-brand">
+        <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="site-brand-logo" decoding="async" width="7200" height="2048" /></a>
+
+      <div class="header-right">
+        <div class="header-utility">
+          <div class="utility-links">
+            <a href="#">信息门户</a>
+            <a href="#">教务系统</a>
+            <a href="#">图书馆</a>
+            <a href="#">邮箱登录</a>
+          </div>
+          <div class="header-tools">
+            <button class="lang-switch">English</button>
+            <button class="search-btn" aria-label="搜索">&#128269;</button>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+        <div class="nav-item"><a href="../index.html">首页</a></div>
+        <div class="nav-item has-dropdown">
+          <a href="../site-info/overview.html">学校概况</a>
+          <ul class="nav-dropdown">
+            <li><a href="../site-info/overview.html">学校简介</a></li>
+            <li><a href="../site-info/history.html">历史沿革</a></li>
+            <li><a href="../site-info/advantage.html">办学优势</a></li>
+            <li><a href="../site-info/vision.html">愿景使命</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../college/index.html">院系设置</a>
+          <ul class="nav-dropdown">
+            <li><a href="../college/li.html">理学院</a></li>
+            <li><a href="../college/weilai.html">蔚莱科学技术学院</a></li>
+            <li><a href="../college/esports.html">电子竞技学院</a></li>
+            <li><a href="../college/art-media.html">艺术与传媒学院</a></li>
+            <li><a href="../college/literature.html">汉语言文学学院</a></li>
+            <li><a href="../college/amy.html">艾米商学院</a></li>
+            <li><a href="../college/philosophy-law.html">哲学与社会科学学院</a></li>
+            <li><a href="../college/siyuan.html">思源教育学院</a></li>
+            <li><a href="../college/lanyun.html">蓝云外国语学院</a></li>
+            <li><a href="../college/tianyu.html">田语学院</a></li>
+            <li><a href="../college/magic.html">魔法学院</a></li>
+            <li><a href="../college/chuangxiang.html">华田中央大学创想蓝天学院</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../news/school-news.html">新闻动态</a>
+          <ul class="nav-dropdown">
+            <li><a href="../news/school-news.html">校园要闻</a></li>
+            <li><a href="../news/notice.html">通知公告</a></li>
+            <li><a href="../news/academic.html">学术动态</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../recruit/undergraduate.html">招生就业</a>
+          <ul class="nav-dropdown">
+            <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+            <li><a href="../recruit/graduate.html">研究生招生</a></li>
+            <li><a href="../recruit/employment.html">就业服务</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../campus-culture/scenery.html">校园文化</a>
+          <ul class="nav-dropdown">
+            <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            <li><a href="../campus-culture/activities.html">校园活动</a></li>
+            <li><a href="../campus-culture/clubs.html">学生社团</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="../service/library.html">校园服务</a>
+          <ul class="nav-dropdown">
+            <li><a href="../service/library.html">图书馆</a></li>
+            <li><a href="../service/guide.html">校园指南</a></li>
+            <li><a href="../service/academic.html">教务服务</a></li>
+          </ul>
+        </div>
+        <div class="nav-item has-dropdown active">
+          <a href="index.html">教育集团</a>
+          <ul class="nav-dropdown">
+            <li><a href="index.html">集团概览</a></li>
+            <li><a href="mingde-middle-school.html">附属明德中学</a></li>
+            <li><a href="primary-school.html">附属小学</a></li>
+            <li><a href="kindergarten.html">附属幼儿园</a></li>
+          </ul>
+        </div>
+        </nav>
+      </div>
+
+      <button class="mobile-menu-btn" aria-label="菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 页面 Banner -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <h1>教育集团</h1>
+      <p>构建从幼儿园到高中的一体化基础教育体系，依托华田中央大学优质教育资源，培养面向未来的时代新人</p>
+    </div>
+  </section>
+
+  <!-- 集团概览 -->
+  <section class="group-overview">
+    <div class="group-overview-inner">
+      <div class="section-title">
+        <h2>附属学校</h2>
+        <p>三所附属学校，覆盖K12全学段，共享华田中央大学优质教育资源</p>
+      </div>
+
+      <div class="schools-grid">
+        <!-- 附属明德中学 -->
+        <a href="mingde-middle-school.html" style="text-decoration: none; color: inherit;">
+          <div class="school-card">
+            <img src="../assets/images/campus-building.jpg" alt="华田中央大学附属明德中学" class="school-card-image" />
+            <div class="school-card-body">
+              <span class="school-card-badge private">民办完全中学</span>
+              <div class="school-card-title">附属明德中学</div>
+              <div class="school-card-desc">
+                原名华田市明德中学，2022年与华田中央大学签订合作办学协议，依托大学优质教育资源与品牌影响力，实现办学质量跨越式提升，被誉为"民校复兴典范"。
+              </div>
+              <div class="school-card-meta">
+                <div class="school-card-meta-item">
+                  <strong>1998年</strong>
+                  建校时间
+                </div>
+                <div class="school-card-meta-item">
+                  <strong>3200+</strong>
+                  在校学生
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- 附属小学 -->
+        <a href="primary-school.html" style="text-decoration: none; color: inherit;">
+          <div class="school-card">
+            <img src="../assets/images/campus-wall.jpg" alt="华田中央大学附属小学" class="school-card-image" />
+            <div class="school-card-body">
+              <span class="school-card-badge public">公办小学</span>
+              <div class="school-card-title">附属小学</div>
+              <div class="school-card-desc">
+                又名"华田市青竹区第一小学"，一校两牌。始建于1952年，2018年纳入华田中央大学教育集团，主要解决大学教职工子女就学问题，是华田市首批省级示范小学。
+              </div>
+              <div class="school-card-meta">
+                <div class="school-card-meta-item">
+                  <strong>1952年</strong>
+                  建校时间
+                </div>
+                <div class="school-card-meta-item">
+                  <strong>1800+</strong>
+                  在校学生
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- 附属幼儿园 -->
+        <a href="kindergarten.html" style="text-decoration: none; color: inherit;">
+          <div class="school-card">
+            <img src="../assets/images/campus-classroom-tianyu.jpg" alt="华田中央大学附属幼儿园" class="school-card-image" />
+            <div class="school-card-body">
+              <span class="school-card-badge public">公办幼儿园</span>
+              <div class="school-card-title">附属幼儿园</div>
+              <div class="school-card-desc">
+                由华田中央大学思源教育学院直接创办管理，是省级示范幼儿园。依托大学学前教育专业的学术资源与师资力量，推行"玩中学、学中乐"的教育理念。
+              </div>
+              <div class="school-card-meta">
+                <div class="school-card-meta-item">
+                  <strong>2008年</strong>
+                  建校时间
+                </div>
+                <div class="school-card-meta-item">
+                  <strong>450+</strong>
+                  在园幼儿
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 数据统计 -->
+  <section class="stats-section">
+    <div class="stats-inner">
+      <div class="section-title">
+        <h2>办学规模</h2>
+        <p>一体化基础教育体系，覆盖学前教育至高中教育全学段</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-number">3<span class="unit">所</span></div>
+          <div class="stat-item-label">附属学校</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-number">5450<span class="unit">+</span></div>
+          <div class="stat-item-label">在校学生</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-number">480<span class="unit">+</span></div>
+          <div class="stat-item-label">教职工</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-number">15<span class="unit">年</span></div>
+          <div class="stat-item-label">一贯制培养</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="../assets/images/rcu_logo.png" alt="华田中央大学校徽校名" class="footer-logo-img" loading="lazy" decoding="async" width="7200" height="2048" />
+          <div>
+            <h3>华田中央大学</h3>
+            <div class="footer-brand-en">Rincatia Central University</div>
+          </div>
+          <p>立德树人 · 追求卓越 · 传承文明 · 开创未来<br/>
+             追梦深蓝，启航未来</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-link-group">
+            <h4>学校概况</h4>
+            <ul>
+              <li><a href="../site-info/overview.html">学校简介</a></li>
+              <li><a href="../site-info/history.html">历史沿革</a></li>
+              <li><a href="../site-info/advantage.html">办学优势</a></li>
+              <li><a href="../site-info/vision.html">愿景使命</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>院系设置</h4>
+            <ul>
+              <li><a href="../college/index.html">全部院系</a></li>
+              <li><a href="../college/li.html">理学院</a></li>
+              <li><a href="../college/weilai.html">蔚莱科技学院</a></li>
+              <li><a href="../college/magic.html">魔法学院</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>招生就业</h4>
+            <ul>
+              <li><a href="../recruit/undergraduate.html">本科招生</a></li>
+              <li><a href="../recruit/graduate.html">研究生招生</a></li>
+              <li><a href="../recruit/employment.html">就业服务</a></li>
+              <li><a href="../recruit/employment.html">校友之家</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group">
+            <h4>校园服务</h4>
+            <ul>
+              <li><a href="../service/library.html">图书馆</a></li>
+              <li><a href="../service/guide.html">校园指南</a></li>
+              <li><a href="../service/academic.html">教务服务</a></li>
+              <li><a href="../campus-culture/scenery.html">校园风光</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-group footer-contact-group">
+            <h4>联系我们</h4>
+            <ul class="contact-link-list">
+              <li><span class="icon">&#128205;</span> 华田市丽野区青枣大道1号</li>
+              <li><span class="icon">&#9742;</span> 招生：0123-4567890</li>
+              <li><span class="icon">&#9742;</span> 校办：0123-4567888</li>
+              <li><span class="icon">&#9993;</span> info@rcu.edu.rincatia.com</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-contact footer-edu-group">
+          <h4>教育集团</h4>
+          <ul class="footer-edu-links">
+            <li><a href="../education-group/index.html">集团概览</a></li>
+            <li><a href="../education-group/mingde-middle-school.html">附属明德中学</a></li>
+            <li><a href="../education-group/primary-school.html">附属小学</a></li>
+            <li><a href="../education-group/kindergarten.html">附属幼儿园</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-links">
+          <a href="#">隐私政策</a>
+          <a href="#">使用条款</a>
+          <a href="#">网站地图</a>
+          <a href="#">旧版网站</a>
+        </div>
+        <p>&copy; 2017-2026 华田中央大学 Rincatia Central University. All Rights Reserved.<br/>
+           皖ICP备2025090921号-3</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
